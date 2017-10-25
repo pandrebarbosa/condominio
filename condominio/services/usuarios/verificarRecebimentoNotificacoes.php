@@ -9,6 +9,4 @@ $MoradorNotificacaoDAO = new MoradorNotificacaoDAO();
 
 $res = $MoradorNotificacaoDAO->notificacaoAutorizada($moradorNotificacao);
 
-$resposta = ($res=="" ? false : true);
-
-echo json_encode($resposta);
+echo json_encode($res);

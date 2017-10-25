@@ -240,11 +240,11 @@ var carregaAutorizacaoNotificacao = function(co_pessoa, co_unidade) {
 	$.ajax({
 	  type: "POST",
 	  dataType: "json",
-	  loading: true,
+	  loading: false,
 	  url: "services/usuarios/verificarRecebimentoNotificacoes.php",
 	  data: { co_pessoa: co_pessoa, co_unidade: co_unidade }
 	}).done(function( data ){
-		$("#st_autorizado" + data.st_autorizado).attr('checked','checked');		
+		$("#st_autorizado" + data).attr('checked','checked');		
 	}).fail(function(jqXHR, textStatus, errorThrown) {
 		alert( "Erro: " + textStatus + "\n" + jqXHR.responseText );
 		loading(false);
@@ -297,6 +297,7 @@ var gravarUsuario = function() {
 		  	  co_tipo_usuario: $('#co_tipo_usuario').val(),
 		  	  ds_login:   $('#ds_login').val(),
 		  	  ds_senha:   $('#ds_senha').val(),
+		  	  co_unidade: $('#co_unidade').val(),
 		  	  st_ativo:   $( "input:radio[name=st_ativo]:checked" ).val(),
 		  	  st_autorizado:   $( "input:radio[name=st_autorizado]:checked" ).val(),
 		  	  co_pessoa_registro: $('#co_pessoa_registro').val()
