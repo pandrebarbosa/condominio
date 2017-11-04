@@ -4,8 +4,11 @@ class MoradorNotificacao {
 	private $co_pessoa;
 	private $co_unidade;
 	private $st_autorizado;
+	private $co_pessoa_registro;
+	private $dt_hr_registro;
 	
-	public function __construct($post=null) {
+
+    public function __construct($post=null) {
 		if($post != null){
 			foreach ($post as $keyPost=>$valPost){
 				foreach ( $this as $keyObj => $valueObj ) {
@@ -37,6 +40,21 @@ class MoradorNotificacao {
 	public function setStAutorizado($st_autorizado) {
 	    $this->st_autorizado = $st_autorizado;
 		return $this;
+	}
+	public function getCoPessoaRegistro()
+	{
+	    return $this->co_pessoa_registro;
+	}
+	public function setCoPessoaRegistro($co_pessoa_registro)
+	{
+	    $this->co_pessoa_registro = $co_pessoa_registro;
+	}
+	public function getDtHrRegistro() {
+	    return $this->dt_hr_registro;
+	}
+	public function setDtHrRegistro($dt_hr_registro) {
+	    $this->dt_hr_registro = $dt_hr_registro;
+	    return $this;
 	}
 	public function iterarObjeto() {
 		$arrayRetorno = array();

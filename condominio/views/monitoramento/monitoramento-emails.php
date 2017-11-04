@@ -8,117 +8,45 @@
 	</ol>
   </div>
   <div class="panel-body">
-
-
-		<div class="row">
-		  
-		  <div class="col-md-5">
-		  	<input type="text" class="form-control" id="criterio" placeholder="Digite nome ou login do usuário">
-		  </div>
-		  <div class="col-md-5">
-				<button class="btn btn-info" id="btn-buscar">Buscar</button>
-				<button class="btn btn-warning" id="btn-reset">Limpar</button>
-		  </div>
-		  <div class="col-md-4"></div>
-
-		</div><!-- Fecha div row -->			
-
-	<hr>		
-	
-	<div id="grid"></div>
-
+    <table id="grid" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true">
+        <thead>
+            <tr>
+                <th data-column-id="co_unidade" data-type=numeric data-identifier="true" data-visible="false"></th>
+                <th data-column-id="co_torre" data-type="numeric" data-identifier="true" data-visible="false"></th>
+                <th data-column-id="nu_numero" data-type="numeric" data-identifier="true" data-visible="false"></th>
+                <th data-column-id="no_tipo_unidade" data-type="string" data-order="asc">Tipo</th>
+                <th data-column-id="co_torre" data-type="string" data-order="asc">Torre</th>
+                <th data-column-id="unidade" data-type="string" data-order="asc">Unidade</th>
+                <th data-column-id="commands" data-formatter="commands" data-sortable="false" style="width:6%"></th>
+            </tr>
+        </thead>
+    </table>
   </div>
 </div>
 <script>
-var paginacao = function(total, qtdRegPg, pagina, criterio) {
-
-	pagina = (pagina > 0) ? pagina : 1;
-    var menos = pagina - 1;
-    var mais = pagina + 1;
-    var divisao = total/qtdRegPg;
-    var pgs = Math.ceil(divisao);
-    
-    var paginacao = "<ul class='pagination'>"; 
-    	paginacao += ""; 
-        if (pgs > 1) {
-
-            // Mostragem de pagina
-            if (menos > 0) {
-            	paginacao += "<li class=\"active\"><a style=\"cursor: pointer;\" href=\"javascript:grid("+qtdRegPg+"," + menos + ",'" + criterio + "')\">anterior</a></li>";
-            }
-
-            // Listando as paginas
-            for (var i=1;i<=pgs;i++) {
-                if (i != pagina) {
-                	paginacao += "<li class=\"active\"><a style=\"cursor: pointer;\" href=\"javascript:grid("+qtdRegPg+"," + i + ",'" + criterio + "')\">" + i + "</a></li>";
-                } else {
-                	paginacao += "<li class=\"disabled\"><a>" + i + "</a></li>";
-                }
-            }
-
-            if (mais <= pgs) {
-            	paginacao += "<li class=\"active\"><a style=\"cursor: pointer;\" href=\"javascript:grid("+qtdRegPg+"," + mais + ",'" + criterio + "')\">próxima</a></li>";
-    		}
-    	}
-        paginacao += "</ul>";
-
-    	return paginacao;
-};
-
-var montaResultadoTabela = function(result, header, divResultado, pagina, criterio, maximo) {
-	var total=0;
-	var tabela = "<table class='table table-striped'>";
-		tabela += "<tr>";
-		$.each(header, function (key, val) {
-			tabela += "<th>" + val + "</th>";
-		});
-		tabela += "</tr>";
-
-	var i=1;
-	$.each(result, function (key, val) {
-		tabela += "<tr>";
-		$.each(header, function (k, v) {
-			tabela += "<td>" + val[v] + "</td>";
-		});
-		tabela += "</tr>";
-		i++;
-	});
-	tabela += "</table>";
-	
-	tabela += paginacao(total, maximo, pagina, criterio);
-	
-	$('#' + divResultado).html(tabela).fadeIn('slow');
-};
-
-var grid = function(maximo, pagina ,criterio) {	
-	$.ajax({
-	  type: "POST",
-	  dataType: "json",
-	  loading: true,	  
-	  url: "services/emails/listarUsuariosQueAutorizaramMensagens.php"
-	}).done(function( data ) {
-		var header = ["Nome", "Receber?", "Autorização"];
-		montaResultadoTabela(data, header, "grid", pagina, criterio, maximo);
-	}).fail(function(jqXHR, textStatus, errorThrown) {
-		alert( "Erro: " + textStatus + "\n" + jqXHR.responseText );
-		loading(false);
+var grid = $("#grid").bootgrid({
+    ajax: true,
+    ajaxSettings: {
+        method: "POST",
+        cache: false
+    },
+    post: function ()
+    {
+        /* To accumulate custom parameter with the request object */
+        return {
+            id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
+        };
+    },    
+    url: "services/unidades/listarUnidades.json.php",
+    formatters: {
+        "commands": function(column, row)
+        {
+            return "<button type=\"button\" class=\"btn btn-primary btn-xs btn-default morador\" data-row-unidade=\"" + row.co_unidade + "\" data-row-torre=\"" + row.co_torre + "\" data-row-numero=\"" + row.nu_numero + "\"><span class=\"glyphicon glyphicon-envelope\"></span></button>";
+        }
+    }
+}).on("loaded.rs.jquery.bootgrid", function(){
+    grid.find(".morador").on("click", function(e) {
+    	document.location.href="default.php?ido=monitoramento-emails-manter&co_unidade="+$(this).data("row-unidade")+"&nu_numero="+$(this).data("row-numero")+"&no_torre="+$(this).data("row-torre");
     });
-}; grid(10, null, null);
-
-
-$( "#btn-buscar" ).click(function() {
-  grid(10,null,$("#criterio").val());
-});
-$( "#criterio" ).keypress(function(e) {
-  if(e.which == 13) {
-	grid(10,null,$("#criterio").val());
-  }
-});
-$( "#btn-reset" ).click(function() {
-  grid(10,null,null);
-  $("#appendedInputButtons").val('');
-});
-$( "#btn-novo" ).click(function() {
-	document.location.href='?ido=mensagens-manter';
 });
 </script>

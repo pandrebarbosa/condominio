@@ -24,8 +24,6 @@ $Morador = new Morador();
 $Morador->setCoUnidade($Correio->getCoUnidade());
 $moradores = $MoradorDAO->listarMoradoresDaUnidade($Morador);
 
-//$reg = SMS::smsNovoCorreio();
-
 if($moradores){
 	foreach($moradores as $dados){
 		$Usuario = new Usuario();

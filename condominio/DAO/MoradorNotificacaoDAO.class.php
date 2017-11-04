@@ -26,6 +26,7 @@ class MoradorNotificacaoDAO extends Db {
 	         */
 	        $campos=array();
 	        $valores=array();
+	        $moradorNotificacao->setDtHrRegistro("CURRENT_TIMESTAMP");
 	        $arr = $moradorNotificacao->iterarObjeto();
 	        $i=0;
 	        foreach ($arr as $k=>$val){

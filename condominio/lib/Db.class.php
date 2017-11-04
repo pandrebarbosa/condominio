@@ -211,7 +211,7 @@ class Db{
 			return $param;
 		}elseif(is_numeric($param)){
 			return $param;
-		}elseif($param=="TRUE" || $param=="FALSE"){
+		}elseif($param=="TRUE" || $param=="FALSE" || $param=="true" || $param=="false"){
 			return $param;
 		}elseif(is_string($param)){
 			return "'" . $param . "'";

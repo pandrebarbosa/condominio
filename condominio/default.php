@@ -28,6 +28,8 @@ $banco = new banco();
     <!-- Outros estilos do sistema -->
     <link href="css/estilo-geral.css" rel="stylesheet">
     
+    <link href="css/estiloBotaoSwitch.css" rel="stylesheet">
+    
     <!-- Estilo do BSCallout -->
     <link href="css/bs-callout.css" rel="stylesheet"> 
 

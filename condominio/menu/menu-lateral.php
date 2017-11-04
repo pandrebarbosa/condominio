@@ -120,7 +120,7 @@
                 <div id="dropdown-lvl5" class="panel-collapse collapse">
                     <div class="panel-body">
                         <ul class="nav navbar-nav">
-							<li><a href="?ido=monitoramento-emails">Aceitação de emails</a></li>
+							<li><a href="?ido=monitoramento-emails">Alertas de emails</a></li>
 							<li><a href="?ido=monitoramento-mensagens">Leitura de mensagens</a></li>
 							<li><a href="?ido=monitoramento-logs">Logs</a></li>
 						</ul>

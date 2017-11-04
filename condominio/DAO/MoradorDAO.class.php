@@ -268,6 +268,36 @@ class MoradorDAO extends Db {
 			return false;
 		}
 	
+	}
+	
+	/**
+	 * Lista emails dos moradores de uma unidade
+	 *
+	 * @param $co_unidade
+	 * @return <ListaCorreiosDiarioRelatorio>
+	 */
+	public function listarEmailMoradores($co_unidade) {
+	    
+	    $arrayCampos = array(
+	        "mo.co_pessoa",
+	        "mo.co_unidade",
+	        "co.ds_contato",
+	        "mnf.st_autorizado"
+	    );
+	    
+	    $criterio = "mo.co_unidade= " . $co_unidade . " AND mo.st_ativo IS TRUE";
+	    
+	    $tabelas = "tb_morador AS mo
+					INNER JOIN tb_contato AS co ON co.co_pessoa=mo.co_pessoa AND co.co_tipo_contato = 3 AND co.st_ativo IS TRUE
+                    LEFT JOIN tb_morador_notificacao AS mnf ON mnf.co_pessoa = mo.co_pessoa AND mnf.co_unidade=mo.co_unidade";
+	    $res = $this->connBanco->selecionar( $tabelas, $arrayCampos, $criterio, NULL, NULL, NULL, FALSE );
+	    
+	    if($res){
+	        return $res;
+	    }else{
+	        return false;
+	    }
+	    
 	}	
 	
 }

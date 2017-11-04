@@ -7,20 +7,6 @@
 		</ol>
 	</div>
 	<div class="panel-body">
-
-		<div class="row">
-
-			<div class="col-md-5">
-				<input type="text" class="form-control" id="criterio" placeholder="Digite o nome do morador">
-			</div>
-			<div class="col-md-7">
-				<button class="btn btn-info" id="btn-buscar">Buscar</button>
-				<button class="btn btn-warning" id="btn-reset">Limpar</button>
-			</div>
-			<div class="col-md-4"></div>
-
-		</div>
-		<hr>
         <table id="grid" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true">
             <thead>
                 <tr>
@@ -37,7 +23,6 @@
 	</div>
 </div>
 <script>
-
 var grid = $("#grid").bootgrid({
     ajax: true,
     ajaxSettings: {
@@ -63,6 +48,4 @@ var grid = $("#grid").bootgrid({
     	document.location.href="default.php?ido=moradores-visualizar&co_unidade="+$(this).data("row-unidade")+"&nu_numero="+$(this).data("row-numero")+"&no_torre="+$(this).data("row-torre");
     });
 });
-
-
 </script>
