@@ -82,7 +82,12 @@ class MoradorNotificacaoDAO extends Db {
 	        "st_autorizado"
 	    );
 	    
-	    $res = $this->connBanco->selecionar( "tb_morador_notificacao", $arrayCampos, "co_pessoa=" . $moradorNotificacao->getCoPessoa() . " AND co_unidade=" . $moradorNotificacao->getCoUnidade(), NULL, NULL, NULL, FALSE );
+	    $where = "co_pessoa=" . $moradorNotificacao->getCoPessoa();
+	    if( $moradorNotificacao->getCoUnidade() > 0 ){
+	        $where .= " AND co_unidade=" . $moradorNotificacao->getCoUnidade();
+	    }
+	    
+	    $res = $this->connBanco->selecionar( "tb_morador_notificacao", $arrayCampos, $where, NULL, NULL, NULL, FALSE );
 	    if($res){
 	        return $res[0]['st_autorizado'];
 	    }else{
