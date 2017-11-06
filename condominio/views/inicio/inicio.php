@@ -301,7 +301,21 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 	}else if(tab[1] == "aba-pendencias"){
 		gridPendencias();
 	}else if(tab[1] == "aba-correspondencias"){
-		$("#grid").bootgrid("reload");
+		var grid = $("#gridCorrespondencias").bootgrid({
+		    ajax: true,
+		    ajaxSettings: {
+		        method: "POST",
+		        cache: false
+		    },
+		    post: function ()
+		    {
+		        /* To accumulate custom parameter with the request object */
+		        return {
+		            id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
+		        };
+		    },    
+		    url: "services/correios/listarCorreioDisponivelPorUnidade.json.php"
+		});
 	}
 
 });
@@ -350,22 +364,6 @@ function gridPendencias(){
 		loading(false);
     });
 }
-
-var grid = $("#gridCorrespondencias").bootgrid({
-    ajax: true,
-    ajaxSettings: {
-        method: "POST",
-        cache: false
-    },
-    post: function ()
-    {
-        /* To accumulate custom parameter with the request object */
-        return {
-            id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
-        };
-    },    
-    url: "services/correios/listarCorreioDisponivelPorUnidade.json.php"
-});
 
 function gridQtdMoradoresPorUnidade(){		
 	$.ajax({

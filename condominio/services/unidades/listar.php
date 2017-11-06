@@ -24,7 +24,7 @@ $campos = "u.nu_numero,tu.no_tipo_unidade AS 'Tipo',u.co_unidade,t.no_torre,
 $tabelas = "tb_unidade AS u
 			INNER JOIN tb_tipo_unidade AS tu ON tu.co_tipo_unidade=u.co_tipo_unidade $co_tipo_unidade
 			LEFT JOIN tb_torre AS t ON t.co_torre=u.co_torre
-			LEFT JOIN tb_morador AS m ON m.co_unidade=u.co_unidade
+			LEFT JOIN tb_morador AS m ON m.co_unidade=u.co_unidade AND m.st_ativo IS TRUE
 			LEFT JOIN tb_pessoa AS p ON p.co_pessoa=m.co_pessoa
 			LEFT JOIN tb_tipo_morador AS tm ON tm.co_tipo_morador=m.co_tipo_morador";
 
