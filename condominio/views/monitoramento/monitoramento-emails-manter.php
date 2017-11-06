@@ -68,7 +68,7 @@ var carregaListaMoradores = function(co_unidade) {
 	  type: "POST",
 	  dataType: "json",
 	  loading: true,
-	  url: "services/contatos/listarContatosPorUnidade.json.php",
+	  url: "services/contatos/listarEmailsMoradoresPorUnidade.json.php",
 	  data: { co_unidade: co_unidade }
 	}).done(function( data ){
 		montaResultadoTabela(data, "resultado");

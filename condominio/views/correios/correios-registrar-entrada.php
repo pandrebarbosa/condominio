@@ -241,7 +241,7 @@ var gravarCorreio = function() {
 	  type: "POST",
 	  dataType: "json",
 	  loading: true,
-	  url: "services/correios/gravar.php",
+	  url: "services/correios/gravarEntrada.php",
 	  data: { co_unidade: $('#co_unidade').val(),
 		      co_tipo_item_correio: $('#co_tipo_item_correio').val(),
 		      ds_item: $('#ds_item').val(),

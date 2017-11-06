@@ -158,6 +158,36 @@ class UsuarioDAO extends Db {
 		} else {
 			return false;
 		}
-	}	
+	}
+	
+	
+	/**
+	 * Reseta senha do usuario
+	 *
+	 * @param Usuario $Usuario
+	 */
+	public function resetarSenha(Usuario $Usuario){
+
+	    $campos=array();
+	    //seta o data_hora da alteração
+	    $senha = md5(123456789);
+	    $Usuario->setDsSenha($senha);
+	    $arr = $Usuario->iterarObjeto();
+	    $i=0;
+	    foreach ($arr as $k=>$val){
+	        if($val != null){
+	            $campos[$k] = $val;
+	        }
+	        $i++;
+	    }
+	    /* Se tiver a chave primaria prenchida, retira do array, para não
+	     * fazer parte do UPDATE.
+	     */
+	    if($campos['co_pessoa']){
+	        array_shift($campos);
+	    }
+	    $this->connBanco->alterar("tb_usuario", $campos, "co_pessoa=" . $Usuario->getCoPessoa(), FALSE );
+	    
+	}
 	
 }

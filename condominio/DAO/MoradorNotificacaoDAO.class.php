@@ -63,15 +63,13 @@ class MoradorNotificacaoDAO extends Db {
 	        }
 	        
 	        $this->connBanco->alterar("tb_morador_notificacao", $campos, "co_pessoa=" . $moradorNotificacao->getCoPessoa() . " AND co_unidade=" . $moradorNotificacao->getCoUnidade(), FALSE );
-	        
 	    }
-
 	    
 	}
 	
 	
 	/**
-	 * Verifica se o usuario tem autorizaão para emails
+	 * Verifica se o usuario tem autorização para emails
 	 *
 	 * @param Pessoa $Pessoa
 	 * @return Pessoa

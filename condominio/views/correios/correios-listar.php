@@ -63,7 +63,7 @@
 			Excluir
 			</div>
             <div class="modal-body text-center">
-				Deseja excluir esta correspondência?
+				Deseja excluir esta correspondência? Cód:<span id="id-mensagem-correio"></span>
             </div>
             <div class="modal-footer">
             <input type="hidden" id="co_item_correio_excluir">
@@ -91,8 +91,10 @@ $( "#btn-fechar-modal-impressao" ).click(function() {
 
 var abreModalExclusao = function(id) {
 	$('#co_item_correio_excluir').val(id);
+	$('#id-mensagem-correio').html(id);
 	$('#modal-confirmar-exclusao').modal('show');	
 };
+
 $( "#btn-excluir" ).click(function() {
 	$.ajax({
 	  type: "POST",
@@ -102,14 +104,16 @@ $( "#btn-excluir" ).click(function() {
 	  data: { co_item_correio: $('#co_item_correio_excluir').val() }
 	}).done(function( data ) {
 		$('#co_item_correio_excluir').val(null);
-		grid(10, null, null);
+		$('#id-mensagem-correio').html('');
 		$('#modal-confirmar-exclusao').modal('hide');
 		mostrarAlertas(data.tipo,data.msg);
+		$("#grid").bootgrid("reload");
 	}).fail(function(jqXHR, textStatus, errorThrown) {
 		alert( "Erro: " + textStatus + "\n" + jqXHR.responseText );
 		loading(false);
     });
 });
+
 $( "#btn-cancelar" ).click(function() {
 	$('#co_item_correio_excluir').val(null);
 });
@@ -127,7 +131,7 @@ var grid = $("#grid").bootgrid({
             id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
         };
     },    
-    url: "services/correios/listar.php",
+    url: "services/correios/listarCorrespondencias.json.php",
     formatters: {
         "commands": function(column, row)
         {

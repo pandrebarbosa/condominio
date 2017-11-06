@@ -1,3 +1,10 @@
+<?php
+$depurar = isset($_GET['debug']) ? true : false;
+if($depurar){
+	echo "<pre>";
+	print_r($_SESSION);
+	echo "</pre>";
+} ?>
 <!-- Modal de Mensagens -->
 <div class="modal fade" id="modal-msg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -105,7 +112,7 @@ if($_SESSION['credencial']['ds_senha'] == "25f9e794323b453885f5181f1b624d0b"){
 
 <div class="page-header text-center">
   <h2>Bem vindo, <small><?php echo $_SESSION['credencial']['Nome']?></small></h2>
-  <p>Seu perfil de acesso é <em><?php echo $_SESSION['credencial']['no_tipo_usuario']?></em></p>
+  <p>Seu perfil de acesso é <em><?php echo $_SESSION['credencial']['no_tipo_usuario']?>  [<?php print $_SESSION['credencial']['ambiente']; ?>]</em></p>
 </div>
 
   <!-- Nav tabs -->
@@ -128,6 +135,11 @@ if($_SESSION['credencial']['ds_senha'] == "25f9e794323b453885f5181f1b624d0b"){
     	<a href="#aba-minhas-unidades" aria-controls="aba-minhas-unidades" role="tab" data-toggle="tab">Minhas Unidades</a>
     </li>
     <?php }?>
+    <?php if(in_array($_SESSION['credencial']['no_tipo_usuario'], $abaMinhasUnidades)) {?>
+    <li role="presentation">
+    	<a href="#aba-correspondencias" aria-controls="aba-correspondencias" role="tab" data-toggle="tab">Correspondências</a>
+    </li>
+    <?php }?>    
     <li role="presentation" >
     	<a href="#aba-corpo-diretivo" aria-controls="aba-corpo-diretivo" role="tab" data-toggle="tab">Síndico/Conselho</a>
     </li>
@@ -160,6 +172,7 @@ if($_SESSION['credencial']['ds_senha'] == "25f9e794323b453885f5181f1b624d0b"){
 		  	}
 		  ?>
 		<input type="hidden" value="<?php echo $_SESSION['credencial']['co_pessoa'] ?>" id="co_pessoa_registro">
+		<input type="hidden" value="<?php echo $_SESSION['credencial']['co_unidade'] ?>" id="co_unidade">
 	</div><!-- Aba Início -->
 	  
   	<?php if(in_array($_SESSION['credencial']['no_tipo_usuario'], $abaDadosGerais)) {?>
@@ -209,6 +222,20 @@ if($_SESSION['credencial']['ds_senha'] == "25f9e794323b453885f5181f1b624d0b"){
 		Clique <a href="?ido=unidades-moradores-manter&co_pessoa=<?php echo $_SESSION['credencial']['co_pessoa'] ?>"><b>aqui</b> <span class="glyphicon glyphicon-plus"></span></a> para incluir, em sua propriedade, uma nova vaga na garagem.
 	 </div>
 	</div><!-- Aba Unidades -->
+	
+    <div role="tabpanel" class="tab-pane" id="aba-correspondencias">
+        <table id="gridCorrespondencias" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true">
+            <thead>
+                <tr>
+                    <th data-column-id="item" data-type="string" data-identifier="true">Item</th>
+                    <th data-column-id="unidade" data-type="string">Unidade</th>
+                    <th data-column-id="recebedor" data-type="string">Recebedor</th>
+                    <th data-column-id="chegada" data-type="string" data-order="desc">Chegada</th>
+                    <th data-column-id="retirada" data-type="string">Retirada</th>
+                </tr>
+            </thead>
+        </table>	
+	</div><!-- Aba Correspondências -->	
 	
     <div role="tabpanel" class="tab-pane" id="aba-corpo-diretivo">
 		<h2>Síndico</h2>
@@ -273,27 +300,25 @@ $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 		gridUnidades();
 	}else if(tab[1] == "aba-pendencias"){
 		gridPendencias();
+	}else if(tab[1] == "aba-correspondencias"){
+		$("#grid").bootgrid("reload");
 	}
 
 });
 
 var montaResultadoTabela = function(result, header, divResultado) {
-	var total=0;
 	var tabela = "<table class='table table-striped'>";
 		tabela += "<tr>";
 		$.each(header, function (key, val) {
 			tabela += "<th>" + val + "</th>";
 		});
-		tabela += "</tr>";
-
-	var i=1;
+		tabela += "</tr>";		
 	$.each(result, function (key, val) {
 		tabela += "<tr>";
 		$.each(header, function (k, v) {
 			tabela += "<td>" + val[v] + "</td>";
 		});
 		tabela += "</tr>";
-		i++;
 	});
 	tabela += "</table>";
 	
@@ -325,6 +350,22 @@ function gridPendencias(){
 		loading(false);
     });
 }
+
+var grid = $("#gridCorrespondencias").bootgrid({
+    ajax: true,
+    ajaxSettings: {
+        method: "POST",
+        cache: false
+    },
+    post: function ()
+    {
+        /* To accumulate custom parameter with the request object */
+        return {
+            id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
+        };
+    },    
+    url: "services/correios/listarCorreioDisponivelPorUnidade.json.php"
+});
 
 function gridQtdMoradoresPorUnidade(){		
 	$.ajax({
@@ -437,9 +478,10 @@ function gravarRecebimentoEmail(){
 	  type: "POST",
 	  dataType: "json",
 	  loading: false,	  
-	  url: "services/usuarios/gravarRecebimentoEmail.php",
+	  url: "services/emails/gravarAutorizacaoNotificacao.php",
 	  data: {co_pessoa: $( "#co_pessoa_registro" ).val(),
-		     st_deseja_receber: $('#receber-email_correio').prop('checked'),
+		     co_unidade: $( "#co_unidade" ).val(),
+		     st_autorizado: $('#receber-email_correio').prop('checked'),
 		     co_pessoa_registro: $( "#co_pessoa_registro" ).val()}
 	}).done(function( data ) {
 		autorizacaoEmail();
@@ -455,9 +497,9 @@ function autorizacaoEmail(){
 	  dataType: "json",
 	  loading: false,	  
 	  url: "services/usuarios/retornaAutorizacaoRecebimentoEmail.php",
-	  data: {co_pessoa: $( "#co_pessoa_registro" ).val()}
+	  data: {co_pessoa: $( "#co_pessoa_registro" ).val(), co_unidade: $( "#co_unidade" ).val()}
 	}).done(function( data ) {
-		if(data[0].st_deseja_receber == 1 ){
+		if(data == 1 ){
 			$( "#receber-email_correio" ).prop('checked', true);
 			$('#texto-mensagem-check').html('Desejo <b>PARAR</b> de receber emails quando uma nova correspondência chegar! ');
 			$("#aviso-polegar").addClass('glyphicon-thumbs-down');

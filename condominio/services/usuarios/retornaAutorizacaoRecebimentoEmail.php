@@ -1,12 +1,12 @@
 <?php
 require_once (realpath(dirname(dirname(dirname(__FILE__)))) . '/services/lib/inicializa.php');
-include(realpath(dirname(dirname(dirname(__FILE__)))) . '/entidades/RecebimentoEmail.class.php');
-include(realpath(dirname(dirname(dirname(__FILE__)))) . '/DAO/RecebimentoEmailDAO.class.php');
+include(realpath(dirname(dirname(dirname(__FILE__)))) . '/entidades/MoradorNotificacao.class.php');
+include(realpath(dirname(dirname(dirname(__FILE__)))) . '/DAO/MoradorNotificacaoDAO.class.php');
 
-$RecebimentoEmail = new RecebimentoEmail($_POST);
-$RecebimentoEmailDAO = new RecebimentoEmailDAO();
+$MoradorNotificacao = new MoradorNotificacao($_POST);
+$MoradorNotificacaoDAO = new MoradorNotificacaoDAO();
 
-$res = $RecebimentoEmailDAO->retornaAutorizacaoRecebimentoEmail($RecebimentoEmail);
+$res = $MoradorNotificacaoDAO->notificacaoAutorizada($MoradorNotificacao);
 
 if($res){
 	$retorno = $res;

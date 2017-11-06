@@ -1,4 +1,11 @@
-<p></p>      
+<p></p>
+<!--Alertas-->
+<div class="alert alert-dismissable" style="display: none;" id="alertas">
+	<button type="button" class="close" data-dismiss="alert"
+		aria-hidden="true">&times;</button>
+	<strong>Atenção!</strong>
+</div>
+<!--/Alertas-->     
 <div class="panel panel-default">
   <div class="panel-heading">
 	<ol class="breadcrumb">
@@ -7,127 +14,77 @@
 	</ol>
   </div>
   <div class="panel-body">
-
-
 		<div class="row">
-		  
 		  <div class="col-md-5">
-		  	<input type="text" class="form-control" id="criterio" placeholder="Digite nome ou login do usuário">
-		  </div>
-		  <div class="col-md-5">
-				<button class="btn btn-info" id="btn-buscar">Buscar</button>
-				<button class="btn btn-warning" id="btn-reset">Limpar</button>
 				<button class="btn btn-primary" id="btn-novo">Novo usuário</button>		
 		  </div>
 		  <div class="col-md-4"></div>
-
+		  		  <div class="col-md-5">
+		  </div>
 		</div><!-- Fecha div row -->			
 
 	<hr>		
 	
-	<div id="grid"></div>
+    <table id="grid" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true">
+        <thead>
+            <tr>
+                <th data-column-id="nome" data-type="string" data-identifier="true">Nome</th>
+                <th data-column-id="login" data-type="string">Login</th>
+                <th data-column-id="tipo" data-type="string">Tipo</th>
+                <th data-column-id="ativo" data-type="string">Ativo</th>
+                <th data-column-id="commands" data-formatter="commands" data-sortable="false" style="width:6%"></th>
+            </tr>
+        </thead>
+    </table>
 
   </div>
 </div>
 <script>
-var paginacao = function(total, qtdRegPg, pagina, criterio) {
-
-	pagina = (pagina > 0) ? pagina : 1;
-    var menos = pagina - 1;
-    var mais = pagina + 1;
-    var divisao = total/qtdRegPg;
-    var pgs = Math.ceil(divisao);
-    
-    var paginacao = "<ul class='pagination'>"; 
-    	paginacao += ""; 
-        if (pgs > 1) {
-
-            // Mostragem de pagina
-            if (menos > 0) {
-            	paginacao += "<li class=\"active\"><a style=\"cursor: pointer;\" href=\"javascript:grid("+qtdRegPg+"," + menos + ",'" + criterio + "')\">anterior</a></li>";
-            }
-
-            // Listando as paginas
-            for (var i=1;i<=pgs;i++) {
-                if (i != pagina) {
-                	paginacao += "<li class=\"active\"><a style=\"cursor: pointer;\" href=\"javascript:grid("+qtdRegPg+"," + i + ",'" + criterio + "')\">" + i + "</a></li>";
-                } else {
-                	paginacao += "<li class=\"disabled\"><a>" + i + "</a></li>";
-                }
-            }
-
-            if (mais <= pgs) {
-            	paginacao += "<li class=\"active\"><a style=\"cursor: pointer;\" href=\"javascript:grid("+qtdRegPg+"," + mais + ",'" + criterio + "')\">próxima</a></li>";
-    		}
-    	}
-        paginacao += "</ul>";
-
-    	return paginacao;
-};
-
-var montaResultadoTabela = function(result, header, divResultado, pagina, criterio, maximo) {
-	var total=0;
-	var tabela = "<table class='table table-striped'>";
-		tabela += "<tr>";
-		$.each(header, function (key, val) {
-			tabela += "<th>" + val + "</th>";
-		});
-		tabela += "<th>Ação</th>";
-		tabela += "</tr>";
-
-	var i=1;
-	$.each(result, function (key, val) {
-		tabela += "<tr>";
-		if(i>1){
-			$.each(header, function (k, v) {
-				tabela += "<td>" + val[v] + "</td>";
-			});
-			tabela += "<td>";
-			tabela += "<a class='btn btn-primary btn-sm' title='Detalhar' href='default.php?ido=usuarios-manter&co_pessoa="+val.co_pessoa+"'><i class='glyphicon glyphicon-pencil'></i></a>";
-			tabela += "</td>";
-			tabela += "</tr>";
-		}else{
-			total = val.total;
-		}
-		i++;
-	});
-	tabela += "</table>";
-	
-	tabela += paginacao(total, maximo, pagina, criterio);
-	
-	$('#' + divResultado).html(tabela).fadeIn('slow');
-};
-
-var grid = function(maximo, pagina ,criterio) {	
+var resetarSenhaUsuario = function(co_pessoa){
 	$.ajax({
-	  type: "POST",
-	  dataType: "json",
-	  loading: true,	  
-	  url: "services/usuarios/listar.php",
-	  data: { pagina: pagina, criterio: criterio, maximo: maximo }
-	}).done(function( data ) {
-		var header = ["Nome", "Login", "Tipo de usuário", "Ativo"];
-		montaResultadoTabela(data, header, "grid", pagina, criterio, maximo);
-	}).fail(function(jqXHR, textStatus, errorThrown) {
-		alert( "Erro: " + textStatus + "\n" + jqXHR.responseText );
-		loading(false);
+		  type: "POST",
+		  dataType: "json",
+		  url: "services/usuarios/resetarSenha.php",
+		  data: {co_pessoa: co_pessoa } 
+		}).done(function( data ){
+			mostrarAlertas(data.tipo,data.msg);
+		}).fail(function(jqXHR, textStatus, errorThrown) {
+			alert( "Erro: " + textStatus + "\n" + jqXHR.responseText );
+			loading(false);
+	    });
+};
+
+var grid = $("#grid").bootgrid({
+    ajax: true,
+    ajaxSettings: {
+        method: "POST",
+        cache: false
+    },
+    post: function ()
+    {
+        /* To accumulate custom parameter with the request object */
+        return {
+            id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
+        };
+    },    
+    url: "services/usuarios/listarUsuarios.json.php",
+    formatters: {
+        "commands": function(column, row)
+        {
+            return "<button type=\"button\" class=\"btn btn-primary btn-xs btn-default editar\" data-row-co-pessoa=\"" + row.co_pessoa + "\"><span class=\"glyphicon glyphicon-pencil\"></span></button> " + 
+                   "<button type=\"button\" class=\"btn btn-success btn-xs btn-default resetar\" data-row-co-pessoa=\"" + row.co_pessoa + "\"><span class=\"glyphicon glyphicon-repeat\"></span></button>";
+        }
+    }
+}).on("loaded.rs.jquery.bootgrid", function(){
+    /* Executes after data is loaded and rendered */
+    grid.find(".editar").on("click", function(e) {
+    	document.location.href="default.php?ido=usuarios-manter&co_pessoa=" + $(this).data("row-co-pessoa");
+    }).end().find(".resetar").on("click", function(e) {        
+    	resetarSenhaUsuario( $(this).data("row-co-pessoa") );
     });
-}; grid(10, null, null);
+});
 
-
-	$( "#btn-buscar" ).click(function() {
-	  grid(10,null,$("#criterio").val());
-	});
-	$( "#criterio" ).keypress(function(e) {
-	  if(e.which == 13) {
-		grid(10,null,$("#criterio").val());
-	  }
-	});
-	$( "#btn-reset" ).click(function() {
-	  grid(10,null,null);
-	  $("#appendedInputButtons").val('');
-	});
-	$( "#btn-novo" ).click(function() {
-		document.location.href='?ido=usuarios-manter';
-	});
+$( "#btn-novo" ).click(function() {
+	document.location.href='?ido=usuarios-manter';
+});
 </script>

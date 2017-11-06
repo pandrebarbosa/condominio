@@ -1,6 +1,20 @@
 <?php
 class Email
 {
+ 
+    static function emailResetarSenha($destinatario){
+        
+        $templatePath = realpath(dirname(dirname(dirname(__FILE__)))) . '/views/email/aviso-nova-senha.html';
+        $templateConteudo = file_get_contents( $templatePath );
+        
+        $assunto = "Nova senha de acesso";
+        $conteudo = $templateConteudo;
+        
+        $enviou = self::enviaEmail($destinatario, $destinatarioCc, $assunto, $conteudo);
+        
+        return $enviou;
+        
+    }
     
     static function emailNovoUsuario($nome,$email,$unidades){
     	
@@ -49,16 +63,17 @@ class Email
 		
 		$assunto = "San Rahael avisa: Chegou uma nova correspondência.";
 		$conteudo = str_replace ( $placeHolders, $values, $templateContent );
-		$destinatarioFinal = $destinatario;
-		$destinatarioCc = null;//"pandre.barbosa@gmail.com";
+		$destinatarioFinal = implode(',', $destinatario);
+		$destinatarioCc = null;
 		
 		$enviou = self::enviaEmail($destinatarioFinal, $destinatarioCc, $assunto, $conteudo);
 		
+		//Se tiver enviado, gravo o registor do envio.
 		if($enviou){
 			$EnvioEmail = new EnvioEmail();
 			$EnvioEmail->setDsAssunto($assunto);
 			$EnvioEmail->setDsConteudo($conteudo);
-			$EnvioEmail->setDsEmail($destinatario);
+			$EnvioEmail->setDsEmail($destinatarioFinal);
 			$EnvioEmailDAO = new EnvioEmailDAO();
 			$env = $EnvioEmailDAO->gravarEnvioEmail($EnvioEmail);
 		}

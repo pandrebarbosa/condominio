@@ -36,7 +36,7 @@
 			  type: "POST",
 			  dataType: "json",
 			  loading: true,	  
-			  url: "services/correios/listarCorreioDisponivelPorMorador.php",
+			  url: "services/correios/listarCorreioDisponivelPorUnidade.json.php",
 			  data: {co_unidade: $("#co_unidade").val()}
 			}).done(function( data ) {
 				if(data===true){
@@ -47,7 +47,7 @@
 				alert( "Erro: " + textStatus + "\n" + jqXHR.responseText );
 				loading(false);
 		    });
-		}gridChegouCorrespondencia();
+		}//gridChegouCorrespondencia();
 		
 	  function gridMensagens(co_pessoa_registro){
 		  var i=0;		

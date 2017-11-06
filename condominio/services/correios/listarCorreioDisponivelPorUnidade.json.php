@@ -5,7 +5,8 @@ $banco = new banco();
 // initilize all variable
 $params = $totalRecords = $data = array();
 
-$orderBy = $limit = $where = "";
+$orderBy = $limit = "";
+$where = "c.st_ativo IS TRUE AND c.co_unidade = " . $_SESSION['credencial']['co_unidade'];
 
 $params = $_REQUEST;
 $limit = $params["rowCount"];
@@ -19,7 +20,7 @@ if (isset($params["current"])) {
 $start_from = ($page - 1) * $limit;
 // check search value exist
 if (! empty($params['searchPhrase'])) {
-    $where .= " ( CONCAT(tic.no_tipo_item_correio,' nr. ',c.ds_item) LIKE '%" . $params['searchPhrase'] . "%' ";
+    $where .= " AND ( CONCAT(tic.no_tipo_item_correio,' nr. ',c.ds_item) LIKE '%" . $params['searchPhrase'] . "%' ";
     $where .= " OR p.no_pessoa LIKE '%" . $params['searchPhrase'] . "%' ";
     $where .= " OR CONCAT('Torre ',u.co_torre,' unidade ',u.nu_numero) LIKE '%" . $params['searchPhrase'] . "%' )";
 }
@@ -32,13 +33,13 @@ if (! empty($params['sort'])) {
             $itemOrder = "rc.dt_hr_retirada";
             break;
         default:
-            $itemOrder = key($params['sort']);        
+            $itemOrder = key($params['sort']);
     }
     $orderBy = $itemOrder . ' ' . current($params['sort']);
 }
 // getting total number records without any search
 $campos = "c.co_item_correio,
-           CONCAT(tic.no_tipo_item_correio,' nr. ',c.ds_item) AS 'item',
+            CONCAT(tic.no_tipo_item_correio,' nr. ',c.ds_item) AS 'item',
 			CONCAT('Torre ',u.co_torre,' unidade ',u.nu_numero) AS 'unidade',
             p.no_pessoa AS 'recebedor',
 			DATE_FORMAT(c.dt_hr_chegada,'%d/%m/%Y %H:%i') AS 'chegada',
@@ -46,7 +47,7 @@ $campos = "c.co_item_correio,
 
 $tabelas = "tb_correio AS c
 		    INNER JOIN tb_tipo_item_correio AS tic ON tic.co_tipo_item_correio=c.co_tipo_item_correio
-			INNER JOIN tb_pessoa AS p ON p.co_pessoa=c.co_funcionario_recebimento
+			INNER JOIN tb_pessoa AS p ON p.co_pessoa=c.co_funcionario_recebimento 
 			INNER JOIN tb_unidade AS u ON u.co_unidade=c.co_unidade
 			LEFT JOIN tb_retirada_correio AS rc ON rc.co_item_correio=c.co_item_correio";
 
@@ -67,4 +68,3 @@ $json_data = array(
 );
 
 echo json_encode($json_data);
-	

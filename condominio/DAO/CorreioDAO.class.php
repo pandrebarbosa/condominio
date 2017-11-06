@@ -82,22 +82,26 @@ class CorreioDAO extends Db {
 	 *
 	 * @param Usuario $Usuario
 	 */
-	public function listarCorreioDisponivelPorMoradorJSON($co_unidade) {
+	public function listarCorreioDisponivelPorUnidade($co_unidade) {
 	
 		$arrayCampos = array(
-			"c.co_item_correio",
-			"rc.dt_hr_retirada"
+		    "c.co_item_correio",
+		    "c.ds_item",
+		    "p.no_pessoa",
+		    "DATE_FORMAT(c.dt_hr_chegada,'%d/%m/%Y %H:%i') AS 'dt_hr_chegada'",
+		    "DATE_FORMAT(rc.dt_hr_retirada,'%d/%m/%Y %H:%i') AS 'dt_hr_retirada'"
 		);
 		
-		$tabelas = "tb_correio AS c LEFT JOIN tb_retirada_correio AS rc ON rc.co_item_correio=c.co_item_correio";
-		$res = $this->connBanco->selecionar($tabelas, $arrayCampos, "c.st_ativo IS TRUE AND c.co_unidade=" . $co_unidade, "", "", "", FALSE);	
+		$tabelas = "tb_correio AS c
+		            LEFT JOIN tb_retirada_correio AS rc ON rc.co_item_correio=c.co_item_correio
+		            INNER JOIN tb_pessoa AS p ON p.co_pessoa=c.co_funcionario_recebimento";
+		$where = "c.st_ativo IS TRUE AND c.co_unidade=" . $co_unidade;
+		$orderby="c.dt_hr_chegada DESC";
+		
+		$res = $this->connBanco->selecionar($tabelas, $arrayCampos, $where, "", $orderby, "", FALSE);	
 		
 		if($res){
-			if ($res[0]['dt_hr_retirada'] == null || $res[0]['dt_hr_retirada'] == '' || empty($res[0]['dt_hr_retirada'])) {
-				return true;
-			} else {
-				return false;
-			}
+		    return $res;
 		}else{
 			return false;
 		}
