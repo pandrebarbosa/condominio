@@ -10,7 +10,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
 	<ol class="breadcrumb">
-	  <li><a href="?ido=inicio">Início</a></li>
+	  <li><a href="?ido=<?php echo base64_encode("inicio")?>">Início</a></li>
 	  <li class="active">Lista de correspondências para retirada</li>
 	</ol>
   </div>
@@ -68,8 +68,9 @@
 
 <script>
 var abreModalImpressao = function(id) {
-	//var html = '<iframe src="http://www.condominiosanraphael.com.br/condominio/views/correios/impressao.html?co_item_correio=' + id+'" id="iframeCorreio" width="100%" frameBorder="0" scrolling="no"></iframe>';
-	var html = '<iframe src="http://localhost/condominiosanraphael/condominio/views/correios/impressao.html?co_item_correio=' + id+'" id="iframeCorreio" width="100%" frameBorder="0" scrolling="no"></iframe>';
+	var endereco = "http://<?php echo $_SESSION['credencial']['ambiente']=="DEV" ? "localhost/condominiosanraphael" : "www.condominiosanraphael.com.br" ?>/condominio/views/correios/impressao.html?co_item_correio="+id,
+	var html = '<iframe src="'+endereco+'" id="iframeCorreio" width="100%" frameBorder="0" scrolling="no"></iframe>';
+	//var html = '<iframe src="http://localhost/condominiosanraphael/condominio/views/correios/impressao.html?co_item_correio=' + id+'" id="iframeCorreio" width="100%" frameBorder="0" scrolling="no"></iframe>';
 	$('#iframeCorreio').html(html);
 	$('#modal-confirmar-impressao').modal('show');	
 };
@@ -133,6 +134,6 @@ var grid = $("#grid").bootgrid({
 });
 
 $( "#btn-novo" ).click(function() {
-	document.location.href='?ido=correios-entrada';
+	document.location.href='?ido=<?php echo base64_encode("correios-entrada")?>';
 });
 </script>

@@ -11,8 +11,8 @@
 	<div class="row">
 		<div class="col-sm-11">
 			<ol class="breadcrumb">
-			  <li><a href="?ido=inicio">Início</a></li>
-			  <li><a href="?ido=correios-listar">Lista de correspondências</a></li>
+			  <li><a href="?ido=<?php echo base64_encode("inicio")?>">Início</a></li>
+			  <li><a href="?ido=<?php echo base64_encode("correios-listar")?>">Lista de correspondências</a></li>
 			  <li class="active">Retirada de correspondências</li>
 			</ol>
 		</div>

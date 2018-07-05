@@ -22,6 +22,7 @@ $start_from = ($page - 1) * $limit;
 if (! empty($params['searchPhrase'])) {
     $where .= " AND ( CONCAT(tic.no_tipo_item_correio,' nr. ',c.ds_item) LIKE '%" . $params['searchPhrase'] . "%' ";
     $where .= " OR p.no_pessoa LIKE '%" . $params['searchPhrase'] . "%' ";
+    $where .= " OR c.ds_observacao LIKE '%" . $params['searchPhrase'] . "%' ";
     $where .= " OR CONCAT('Torre ',u.co_torre,' unidade ',u.nu_numero) LIKE '%" . $params['searchPhrase'] . "%' )";
 }
 if (! empty($params['sort'])) {

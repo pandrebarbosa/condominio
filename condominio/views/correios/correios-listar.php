@@ -10,7 +10,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
 	<ol class="breadcrumb">
-	  <li><a href="?ido=inicio">Início</a></li>
+	  <li><a href="?ido=<?php echo base64_encode("inicio")?>">Início</a></li>
 	  <li class="active">Listagem geral de correspondências</li>
 	</ol>
   </div>
@@ -145,7 +145,7 @@ var grid = $("#grid").bootgrid({
     grid.find(".imprimir").on("click", function(e) {
     	abreModalImpressao($(this).data("row-id"));
     }).end().find(".retirar").on("click", function(e) {
-    	document.location.href="default.php?ido=correios-retirada&co_item_correio=" + $(this).data("row-id");
+    	document.location.href="default.php?ido=<?php echo base64_encode("correios-retirada")?>&co_item_correio=" + $(this).data("row-id");
     }).end().find(".excluir").on("click", function(e) {
     	abreModalExclusao($(this).data("row-id"));
     });
@@ -153,6 +153,6 @@ var grid = $("#grid").bootgrid({
 
 
 $( "#btn-novo" ).click(function() {
-	document.location.href='?ido=correios-entrada';
+	document.location.href='?ido=<?php echo base64_encode("correios-entrada")?>';
 });
 </script>
