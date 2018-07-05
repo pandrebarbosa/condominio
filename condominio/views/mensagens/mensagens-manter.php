@@ -9,8 +9,8 @@
 <div class="panel panel-default">
   <div class="panel-heading">
 	<ol class="breadcrumb">
-	  <li><a href="?ido=inicio">Início</a></li>
-	  <li><a href="?ido=mensagens-listar">Mensagens</a></li>
+	  <li><a href="?ido=<?php echo base64_encode("inicio")?>">Início</a></li>
+	  <li><a href="?ido=<?php echo base64_encode("mensagens-listar")?>">Mensagens</a></li>
 	  <li class="active">Cadastro</li>
 	</ol>
   </div>

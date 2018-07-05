@@ -93,7 +93,7 @@ var montaResultadoTabela = function(result, header, divResultado, pagina, criter
 				tabela += "<td>" + val[v] + "</td>";
 			});
 			tabela += "<td>";
-			tabela += "<a class='btn btn-primary btn-sm' title='Detalhar' href='default.php?ido=abrir-ficha-unidade&co_unidade=" + val.co_unidade + "&nu_numero=" + val.nu_numero + "&no_torre=" + val.no_torre + "'><i class='glyphicon glyphicon-pencil'></i></a>";
+			tabela += "<a class='btn btn-primary btn-sm' title='Detalhar' href='default.php?ido=<?php echo base64_encode("abrir-ficha-unidade")?>&co_unidade=" + val.co_unidade + "&nu_numero=" + val.nu_numero + "&no_torre=" + val.no_torre + "'><i class='glyphicon glyphicon-pencil'></i></a>";
 			tabela += "</td>";
 			tabela += "</tr>";
 		}else{

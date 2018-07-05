@@ -1,6 +1,8 @@
 <?php
-if (array_key_exists($ido, $_SESSION['seguranca'])){
-	include($_SESSION['seguranca'][$ido]);
+$idoDecodificado = base64_decode($ido);
+
+if (array_key_exists($idoDecodificado, $_SESSION['seguranca'])){
+    include($_SESSION['seguranca'][$idoDecodificado]);
 }else{
 	include("views/inicio/sem-permissao.php");
 }

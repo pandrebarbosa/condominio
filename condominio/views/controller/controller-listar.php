@@ -79,7 +79,7 @@ var montaResultadoTabela = function(result, header, divResultado, pagina, criter
 				tabela += "<td>" + val[v] + "</td>";
 			});
 			tabela += "<td>";
-			tabela += "<a class='btn btn-primary btn-sm' title='Detalhar' href='default.php?ido=controller-manter&co_controller=" + val.co_controller+"'><i class='glyphicon glyphicon-pencil'></i></a>";
+			tabela += "<a class='btn btn-primary btn-sm' title='Detalhar' href='default.php?ido=<?php echo base64_encode("controller-manter")?>&co_controller=" + val.co_controller+"'><i class='glyphicon glyphicon-pencil'></i></a>";
 			tabela += "</td>";
 			tabela += "</tr>";
 		}else{
@@ -127,6 +127,6 @@ $( "#btn-reset" ).click(function() {
 });
 
 $( "#btn-novo" ).click(function() {
-	document.location.href='?ido=controller-manter';
+	document.location.href='?ido=<?php echo base64_encode("controller-manter")?>';
 });	
 </script>

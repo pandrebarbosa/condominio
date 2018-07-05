@@ -10,7 +10,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
 	<ol class="breadcrumb">
-	  <li><a href="?ido=inicio">Início</a></li>
+	  <li><a href="?ido=<?php echo base64_encode("inicio")?>">Início</a></li>
 	  <li>Meu login</li>
 	  <li class="active">Alterar</li>
 	</ol>

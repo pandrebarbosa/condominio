@@ -9,6 +9,7 @@ class Email
         
         $assunto = "Nova senha de acesso";
         $conteudo = $templateConteudo;
+        $destinatarioCc = null;
         
         $enviou = self::enviaEmail($destinatario, $destinatarioCc, $assunto, $conteudo);
         

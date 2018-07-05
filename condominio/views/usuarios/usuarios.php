@@ -38,21 +38,52 @@
     </table>
 
   </div>
-</div>
+</div>´
+
+<!-- Modal confirma Resetar Senha -->
+<div class="modal fade" id="modal-confirmar-reset" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="modal-confirmar-reset">
+    <div class="modal-dialog">
+        <div class="modal-content">
+			<div class="modal-header">
+			Atenção!
+			</div>
+            <div class="modal-body text-center">
+				<span>A senha será resetada para o padrão e um email será enviado ao usuário. Continuar?</span>
+				<input type="hidden" id="co_pessoa">				
+            </div>
+            <div class="modal-footer">
+                <button id="btn-confirmar-reset" type="button" class="btn btn-primary">Sim</button>
+                <button id="btn-cancelar-reset" type="button" class="btn btn-default">Não</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <script>
-var resetarSenhaUsuario = function(co_pessoa){
+$( "#btn-confirmar-reset" ).click(function() {
 	$.ajax({
 		  type: "POST",
 		  dataType: "json",
 		  url: "services/usuarios/resetarSenha.php",
-		  data: {co_pessoa: co_pessoa } 
+		  data: {co_pessoa: $("#co_pessoa").val() } 
 		}).done(function( data ){
 			mostrarAlertas(data.tipo,data.msg);
+			$("#modal-confirmar-reset").modal('hide');
 		}).fail(function(jqXHR, textStatus, errorThrown) {
 			alert( "Erro: " + textStatus + "\n" + jqXHR.responseText );
 			loading(false);
 	    });
-};
+});
+
+$( "#btn-cancelar-reset" ).click(function() {
+	$("#co_pessoa").val( null );
+	$("#modal-confirmar-reset").modal('hide');
+});
+
+var resetarSenhaUsuario = function(co_pessoa){
+	$("#co_pessoa").val(co_pessoa);
+	$("#modal-confirmar-reset").modal('show');
+}
 
 var grid = $("#grid").bootgrid({
     ajax: true,
@@ -78,13 +109,13 @@ var grid = $("#grid").bootgrid({
 }).on("loaded.rs.jquery.bootgrid", function(){
     /* Executes after data is loaded and rendered */
     grid.find(".editar").on("click", function(e) {
-    	document.location.href="default.php?ido=usuarios-manter&co_pessoa=" + $(this).data("row-co-pessoa");
+    	document.location.href="default.php?ido=<?php echo base64_encode("usuarios-manter")?>&co_pessoa=" + $(this).data("row-co-pessoa");
     }).end().find(".resetar").on("click", function(e) {        
     	resetarSenhaUsuario( $(this).data("row-co-pessoa") );
     });
 });
 
 $( "#btn-novo" ).click(function() {
-	document.location.href='?ido=usuarios-manter';
+	document.location.href='?ido=<?php echo base64_encode("usuarios-manter")?>';
 });
 </script>

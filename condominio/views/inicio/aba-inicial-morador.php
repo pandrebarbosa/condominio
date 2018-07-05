@@ -25,7 +25,7 @@
 	
 	<div class="col-md-4 text-center">
 		<h3>Funcionários</h3>
-		<a href="?ido=funcionarios-conhecer"><img src="img/group.png" />
+		<a href="?ido=<?php echo base64_encode("funcionarios-conhecer")?>"><img src="img/group.png" />
 		<p>Conheça os funcionários do nosso condomínio.</p></a>
 	</div>
 </div>

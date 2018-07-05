@@ -49,7 +49,7 @@ if ($totalDeRegistros!= "") {
         <td><?php echo $dados['no_tipo_unidade'] ?></td>
         <td><?php echo $dados['no_pessoa'] ." (<i>" . $dados['no_tipo_morador'] . "</i>)" ?></td>
         <td>
-        	<a class="btn btn-primary" title="Detalhar" href="?ido=moradores-manter&co_pessoa=<?php echo $dados['co_pessoa'] ?>&co_torre=<?php echo $dados['co_torre'] ?>&nu_numero=<?php echo $dados['nu_numero'] ?>&co_tipo_unidade=<?php echo $dados['co_tipo_unidade'] ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+        	<a class="btn btn-primary" title="Detalhar" href="?ido=<?php echo base64_encode("moradores-manter")?>&co_pessoa=<?php echo $dados['co_pessoa'] ?>&co_torre=<?php echo $dados['co_torre'] ?>&nu_numero=<?php echo $dados['nu_numero'] ?>&co_tipo_unidade=<?php echo $dados['co_tipo_unidade'] ?>"><i class="glyphicon glyphicon-pencil"></i></a>
         </td>
     </tr>
 	<?php } ?>

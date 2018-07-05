@@ -41,7 +41,7 @@
     <div class="side-menu-container">
         <ul class="nav navbar-nav">
 
-			<li><a href="?ido=inicio"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Início</a></li>
+			<li><a href="?ido=<?php echo base64_encode("inicio")?>"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Início</a></li>
 
 			<?php if(in_array($_SESSION['credencial']['no_tipo_usuario'], $menuAdmin)) {?>
             <!-- Menu SYS -->
@@ -53,19 +53,19 @@
                     <div class="panel-body">
                         <ul class="nav navbar-nav">
 							<li class="dropdown-header">Cadastro de Pessoas</li>					
-							<li><a href="?ido=usuarios-listar">Usuários</a></li>
-							<li><a href="?ido=funcionarios-listar">Funcionários</a></li>
+							<li><a href="?ido=<?php echo base64_encode("usuarios-listar")?>">Usuários</a></li>
+							<li><a href="?ido=<?php echo base64_encode("funcionarios-listar")?>">Funcionários</a></li>
 							<li role="separator" class="divider"></li>
 							<li class="dropdown-header">Cadastro de unidades</li>
-							<li><a href="?ido=unidades-listar">Unidades</a></li>
-							<li><a href="?ido=tipos-de-unidade-listar">Tipos de unidade</a></li>						
+							<li><a href="?ido=<?php echo base64_encode("unidades-listar")?>">Unidades</a></li>
+							<li><a href="?ido=<?php echo base64_encode("tipos-de-unidade-listar")?>">Tipos de unidade</a></li>						
 							<li role="separator" class="divider"></li>
 							<li class="dropdown-header">Cadastro variados</li>
-							<li><a href="?ido=tipos-de-moradores-listar">Tipos de moradores</a></li>
+							<li><a href="?ido=<?php echo base64_encode("tipos-de-moradores-listar")?>">Tipos de moradores</a></li>
 							<li role="separator" class="divider"></li>
 							<li class="dropdown-header">Mensagens</li>
-							<li><a href="?ido=mensagens-listar">Listar</a></li>
-							<li><a href="?ido=mensagens-manter">Cadastrar</a></li>
+							<li><a href="?ido=<?php echo base64_encode("mensagens-listar")?>">Listar</a></li>
+							<li><a href="?ido=<?php echo base64_encode("mensagens-manter")?>">Cadastrar</a></li>
                         </ul>
                     </div>
                 </div>
@@ -81,9 +81,9 @@
                 <div id="dropdown-lvl3" class="panel-collapse collapse">
                     <div class="panel-body">
                         <ul class="nav navbar-nav">
-							<li><a href="?ido=unidades-listar-por-morador">Ficha completa das unidades</a></li>
-							<li><a href="?ido=moradores-consultar">Moradores</a></li>
-							<li><a href="?ido=veiculos-consultar">Veículos</a></li>
+							<li><a href="?ido=<?php echo base64_encode("unidades-listar-por-morador")?>">Ficha completa das unidades</a></li>
+							<li><a href="?ido=<?php echo base64_encode("moradores-consultar")?>">Moradores</a></li>
+							<li><a href="?ido=<?php echo base64_encode("veiculos-consultar")?>">Veículos</a></li>
                         </ul>
                     </div>
                 </div>
@@ -99,17 +99,17 @@
                 <div id="dropdown-lvl4" class="panel-collapse collapse">
                     <div class="panel-body">
                         <ul class="nav navbar-nav">
-							<li><a href="?ido=correios-listar">Listagem geral</a></li>
+							<li><a href="?ido=<?php echo base64_encode("correios-listar")?>">Listagem geral</a></li>
 							<li role="separator" class="divider"></li>
 							<li class="dropdown-header">Registro</li>
-							<li><a href="?ido=correios-entrada"><span class="glyphicon glyphicon-resize-small"></span> Entrada de correspondência</a></li>
+							<li><a href="?ido=<?php echo base64_encode("correios-entrada")?>"><span class="glyphicon glyphicon-resize-small"></span> Entrada de correspondência</a></li>
                         </ul>
                     </div>
                 </div>
             </li>
             <?php }?>
 
-			<li><a href="?ido=mensagens-listar-minhas"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Mensagens</a></li>
+			<li><a href="?ido=<?php echo base64_encode("mensagens-listar-minhas")?>"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Mensagens</a></li>
 
 			<?php if(in_array($_SESSION['credencial']['no_tipo_usuario'], $menuMonitoramento)) {?>
             <!-- Menu SYS -->
@@ -120,16 +120,16 @@
                 <div id="dropdown-lvl5" class="panel-collapse collapse">
                     <div class="panel-body">
                         <ul class="nav navbar-nav">
-							<li><a href="?ido=monitoramento-emails">Alertas de emails</a></li>
-							<li><a href="?ido=monitoramento-mensagens">Leitura de mensagens</a></li>
-							<li><a href="?ido=monitoramento-logs">Logs</a></li>
+							<li><a href="?ido=<?php echo base64_encode("monitoramento-emails")?>">Alertas de emails</a></li>
+							<li><a href="?ido=<?php echo base64_encode("monitoramento-mensagens")?>">Leitura de mensagens</a></li>
+							<li><a href="?ido=<?php echo base64_encode("monitoramento-logs")?>">Logs</a></li>
 						</ul>
                     </div>
                 </div>
             </li>
             <?php }?>
 
-            <li><a href="?ido=login-manter"><span class="glyphicon glyphicon-send"></span> Meu login</a></li>
+            <li><a href="?ido=<?php echo base64_encode("login-manter")?>"><span class="glyphicon glyphicon-send"></span> Meu login</a></li>
             
 			<?php if(in_array($_SESSION['credencial']['no_tipo_usuario'], $menuRelatorios)) {?>
             <!-- Menu SYS -->
@@ -142,12 +142,12 @@
                         <ul class="nav navbar-nav">
 							<li role="separator" class="divider"></li>
 							<li class="dropdown-header">Pessoas</li>					
-							<li><a href="?ido=relatorio-funcionarios">Funcionários</a></li>
-							<li><a href="?ido=relatorio-moradores">Moradores</a></li>
+							<li><a href="?ido=<?php echo base64_encode("relatorio-funcionarios")?>">Funcionários</a></li>
+							<li><a href="?ido=<?php echo base64_encode("relatorio-moradores")?>">Moradores</a></li>
 							<li role="separator" class="divider"></li>
 							<li class="dropdown-header">Correios</li>
-							<li><a href="?ido=relatorio-geral-correios">Geral de Correspondências</a></li>
-							<li><a href="?ido=relatorio-diario-entrada-correios">Recebimentos Diários</a></li>
+							<li><a href="?ido=<?php echo base64_encode("relatorio-geral-correios")?>">Geral de Correspondências</a></li>
+							<li><a href="?ido=<?php echo base64_encode("relatorio-diario-entrada-correios")?>">Recebimentos Diários</a></li>
 						</ul>
                     </div>
                 </div>
@@ -164,22 +164,22 @@
                     <div class="panel-body">
                         <ul class="nav navbar-nav">
 		                  	<li class="dropdown-header">Controller</li>
-							<li><a href="?ido=controller-listar">Cadastrar</a></li>
-							<li><a href="?ido=controller-vincular">Vincular</a></li>
+							<li><a href="?ido=<?php echo base64_encode("controller-listar")?>">Cadastrar</a></li>
+							<li><a href="?ido=<?php echo base64_encode("controller-vincular")?>">Vincular</a></li>
 							<li role="separator" class="divider"></li>
 		                  	<li class="dropdown-header">Grupos de Mensagem</li>
-							<li><a href="?ido=grupos-mensagem-manter">Criar Grupo</a></li>
-							<li><a href="?ido=grupos-mensagem-listar">Listar Grupos</a></li>
+							<li><a href="?ido=<?php echo base64_encode("grupos-mensagem-manter")?>">Criar Grupo</a></li>
+							<li><a href="?ido=<?php echo base64_encode("grupos-mensagem-listar")?>">Listar Grupos</a></li>
 							<li role="separator" class="divider"></li>
 		                  	<li class="dropdown-header">Tipos de usuários</li>
-							<li><a href="?ido=tipos-usuarios-listar">Manter</a></li>
+							<li><a href="?ido=<?php echo base64_encode("tipos-usuarios-listar")?>">Manter</a></li>
                         </ul>
                     </div>
                 </div>
             </li>
             <?php }?>
                         
-            <li><a href="?ido=sobre"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Sobre</a></li>
+            <li><a href="?ido=<?php echo base64_encode("sobre")?>"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> Sobre</a></li>
             <li><a href="services/login/logout.php"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> Sair</a></li>
 
         </ul>

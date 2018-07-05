@@ -98,7 +98,7 @@ function registrarLeituraDeMensagem(){
 <?php 
 //Se a senha for a inicial: 123456789, redireciona para a mudança dela.
 if($_SESSION['credencial']['ds_senha'] == "25f9e794323b453885f5181f1b624d0b"){
-	echo "<script>alert('Troque sua senha, saia do sistema e entre novamente.');document.location.href='default.php?ido=login-manter'</script>";
+	echo "<script>alert('Troque sua senha, saia do sistema e entre novamente.');document.location.href='default.php?ido=".base64_encode("login-manter")."'</script>";
 }
 ?>
 <p></p>
@@ -219,7 +219,7 @@ if($_SESSION['credencial']['ds_senha'] == "25f9e794323b453885f5181f1b624d0b"){
     <div role="tabpanel" class="tab-pane" id="aba-minhas-unidades">
 	  <div id="gridUnidades"></div>
 	  <div class="alert alert-info" role="alert">
-		Clique <a href="?ido=unidades-moradores-manter&co_pessoa=<?php echo $_SESSION['credencial']['co_pessoa'] ?>"><b>aqui</b> <span class="glyphicon glyphicon-plus"></span></a> para incluir, em sua propriedade, uma nova vaga na garagem.
+		Clique <a href="?ido=<?php echo base64_encode("unidades-moradores-manter")?>&co_pessoa=<?php echo $_SESSION['credencial']['co_pessoa'] ?>"><b>aqui</b> <span class="glyphicon glyphicon-plus"></span></a> para incluir, em sua propriedade, uma nova vaga na garagem.
 	 </div>
 	</div><!-- Aba Unidades -->
 	

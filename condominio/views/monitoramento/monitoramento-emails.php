@@ -2,7 +2,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
 	<ol class="breadcrumb">
-	  <li><a href="?ido=inicio">Início</a></li>
+	  <li><a href="?ido=<?php echo base64_encode("inicio")?>">Início</a></li>
 	  <li class="active">Monitoramento</li>
 	  <li class="active">Aceitação de emails</li>
 	</ol>
@@ -46,7 +46,7 @@ var grid = $("#grid").bootgrid({
     }
 }).on("loaded.rs.jquery.bootgrid", function(){
     grid.find(".morador").on("click", function(e) {
-    	document.location.href="default.php?ido=monitoramento-emails-manter&co_unidade="+$(this).data("row-unidade")+"&nu_numero="+$(this).data("row-numero")+"&no_torre="+$(this).data("row-torre");
+    	document.location.href="default.php?ido=<?php echo base64_encode("monitoramento-emails-manter")?>&co_unidade="+$(this).data("row-unidade")+"&nu_numero="+$(this).data("row-numero")+"&no_torre="+$(this).data("row-torre");
     });
 });
 </script>

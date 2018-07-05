@@ -2,7 +2,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
 	<ol class="breadcrumb">
-	  <li><a href="?ido=inicio">Início</a></li>
+	  <li><a href="?ido=<?php echo base64_encode("inicio")?>">Início</a></li>
 	  <li class="active">Usuários</li>
 	</ol>
   </div>
@@ -83,7 +83,7 @@ var montaResultadoTabela = function(result, header, divResultado, pagina, criter
 				tabela += "<td>" + val[v] + "</td>";
 			});
 			tabela += "<td>";
-			tabela += "<a class='btn btn-primary btn-sm' title='Detalhar' href='default.php?ido=mensagens-manter&co_mensagem="+val.co_mensagem+"'><i class='glyphicon glyphicon-pencil'></i></a>";
+			tabela += "<a class='btn btn-primary btn-sm' title='Detalhar' href='default.php?ido=<?php echo base64_encode("mensagens-manter")?>&co_mensagem="+val.co_mensagem+"'><i class='glyphicon glyphicon-pencil'></i></a>";
 			tabela += "</td>";
 			tabela += "</tr>";
 		}else{
@@ -128,6 +128,6 @@ var grid = function(maximo, pagina ,criterio) {
 	  $("#appendedInputButtons").val('');
 	});
 	$( "#btn-novo" ).click(function() {
-		document.location.href='?ido=mensagens-manter';
+		document.location.href='?ido=<?php echo base64_encode("mensagens-manter")?>';
 	});
 </script>

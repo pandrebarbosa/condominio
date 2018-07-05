@@ -19,7 +19,7 @@ $criterio = "m.co_pessoa = " . $_SESSION['credencial']['co_pessoa'];
     foreach ($pedidos as $dados) {
     	if($dados['co_tipo_unidade'] == 1 || $dados['co_tipo_unidade'] == 4){
     ?>	
-		<a href="default.php?ido=abrir-ficha-unidade&co_unidade=<?php echo $dados['co_unidade'] ?>&nu_numero=<?php echo $dados['nu_numero'] ?>&no_torre=<?php echo $dados['no_torre'] ?>" class="list-group-item">
+		<a href="default.php?ido=<?php echo base64_encode("abrir-ficha-unidade")?>&co_unidade=<?php echo $dados['co_unidade'] ?>&nu_numero=<?php echo $dados['nu_numero'] ?>&no_torre=<?php echo $dados['no_torre'] ?>" class="list-group-item">
 			<?php
 			//Se for apartamento, mostra a torre
         	if( $dados['co_tipo_unidade']==1 ){

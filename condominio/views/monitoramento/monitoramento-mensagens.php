@@ -2,7 +2,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
 	<ol class="breadcrumb">
-	  <li><a href="?ido=inicio">Início</a></li>
+	  <li><a href="?ido=<?php echo base64_encode("inicio")?>">Início</a></li>
 	  <li class="active">Monitoramento</li>
 	  <li class="active">Leitura das mensagens</li>
 	</ol>
@@ -125,6 +125,6 @@ var grid = function(maximo, pagina ,criterio) {
 	  $("#appendedInputButtons").val('');
 	});
 	$( "#btn-novo" ).click(function() {
-		document.location.href='?ido=mensagens-manter';
+		document.location.href='?ido=<?php echo base64_encode("mensagens-manter")?>';
 	});
 </script>

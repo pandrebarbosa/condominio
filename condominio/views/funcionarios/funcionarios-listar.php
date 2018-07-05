@@ -91,7 +91,7 @@ var montaResultadoTabela = function(result, header, divResultado, pagina, criter
 				}
 			});
 			tabela += "<td>";
-			tabela += "<a class='btn btn-primary btn-sm' title='Detalhar' href='default.php?ido=funcionarios-manter&co_pessoa="+val.co_pessoa+"'><i class='glyphicon glyphicon-pencil'></i></a>";
+			tabela += "<a class='btn btn-primary btn-sm' title='Detalhar' href='default.php?ido=<?php echo base64_encode("funcionarios-manter")?>&co_pessoa="+val.co_pessoa+"'><i class='glyphicon glyphicon-pencil'></i></a>";
 			tabela += "</td>";
 			tabela += "</tr>";
 		}else{
@@ -136,6 +136,6 @@ var grid = function(maximo, pagina ,criterio) {
 	  $("#appendedInputButtons").val('');
 	});
 	$( "#btn-novo" ).click(function() {
-		document.location.href='?ido=funcionarios-manter';
+		document.location.href='?ido=<?php echo base64_encode("funcionarios-manter")?>';
 	});
 </script>

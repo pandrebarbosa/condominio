@@ -139,8 +139,8 @@ class CorreioDAO extends Db {
 			//Caso contrário, pega o da data fornecida
 			$dataBusca = "'".$data."'";
 		}
-
-		$res = $this->connBanco->selecionar($tabelas, $arrayCampos, "DATE_FORMAT(c.dt_hr_chegada,'%Y/%m/%d') = date(".$dataBusca.")", "", "", "", FALSE);
+        $orderBy = "u.co_torre ASC,u.nu_numero ASC";
+		$res = $this->connBanco->selecionar($tabelas, $arrayCampos, "DATE_FORMAT(c.dt_hr_chegada,'%Y/%m/%d') = date(".$dataBusca.")", NULL, $orderBy, NULL, FALSE);
 	
 		if ($res) {
 			return $res;
