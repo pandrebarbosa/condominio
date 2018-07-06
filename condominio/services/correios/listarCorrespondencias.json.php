@@ -39,7 +39,7 @@ if (! empty($params['sort'])) {
     $orderBy = $itemOrder . ' ' . current($params['sort']);
 }
 // getting total number records without any search
-$campos = "c.co_item_correio,
+$campos = "c.co_item_correio AS 'id',
            CONCAT(tic.no_tipo_item_correio,' nr. ',c.ds_item) AS 'item',
 			CONCAT('Torre ',u.co_torre,' unidade ',u.nu_numero) AS 'unidade',
             p.no_pessoa AS 'recebedor',
@@ -60,6 +60,17 @@ $resTotal = $banco->seleciona($tabelas,"count(c.co_item_correio) AS total", $whe
 $totalRecords = $resTotal[0]['total'];
 
 $data = $banco->seleciona($tabelas, $campos, $where, NULL, $orderBy, $limit, FALSE);
+
+//Converte ID para Inteiro
+foreach($data as $k => $val){
+    foreach($val as $key => $value){
+        if($key == "id"){
+           $value = intval($value); 
+        }
+        $val[$key] = $value;
+    }
+    $data[$k] = $val;
+}
 
 $json_data = array(
     "current" => intval($params['current']),

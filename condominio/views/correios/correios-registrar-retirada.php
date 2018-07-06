@@ -62,33 +62,7 @@
 		</div>
 </form>
 
-<!-- Modal confirma senha Usuario -->
-<div class="modal fade" id="modal-confirmar-morador" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="modal-confirmar-morador">
-    <div class="modal-dialog">
-        <div class="modal-content">
-			<div class="modal-header">
-			Confirmar a retirada pelo morador
-			</div>
-            <div class="modal-body text-center">
-        		<div class="row">
-        			<div class="col-md-12">
-        				Digite os 4 últimos digitos de seu CPF:
-        			</div>										
-        		</div>				
-        		<div class="row">
-        			<div class="col-md-12">
-        				<input type="password" maxlength="4" class="form-control" id="ultomos_digitos_cpf" />
-        				<input type="hidden" id="co_item_correio_confirmar">
-        			</div>										
-        		</div>				
-            </div>
-            <div class="modal-footer">
-                  <button id="btn-excluir" class="btn btn-default">Confirmar</button>
-                  <button id="btn-cancelar" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
 
 <script>
 var abreModalConfirmacao = function(id) {

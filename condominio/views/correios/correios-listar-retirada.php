@@ -19,7 +19,8 @@
     <table id="grid" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true">
         <thead>
             <tr>
-                <th data-column-id="item" data-type="string" data-identifier="true">Item</th>
+                <th data-column-id="id" data-type="numeric" data-identifier="true">Id</th>
+                <th data-column-id="item" data-type="string">Item</th>
                 <th data-column-id="unidade" data-type="string">Unidade</th>
                 <th data-column-id="recebedor" data-type="string">Recebedor</th>
                 <th data-column-id="chegada" data-type="string" data-order="desc">Chegada</th>
@@ -123,7 +124,7 @@ var grid = $("#grid").bootgrid({
     formatters: {
         "commands": function(column, row)
         {
-            return "<button type=\"button\" class=\"btn btn-success btn-xs btn-default retirar\" data-row-id=\"" + row.co_item_correio + "\"><span class=\"glyphicon glyphicon-export\"></span></button> ";
+            return "<button type=\"button\" class=\"btn btn-success btn-xs btn-default retirar\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-export\"></span></button> ";
         }
     }
 }).on("loaded.rs.jquery.bootgrid", function(){

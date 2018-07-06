@@ -17,21 +17,23 @@
   <div class="panel-body">
 		<div class="row">
 		  <div class="col-sm-7 col-md-6 col-lg-6">
-				<button class="btn btn-primary" id="btn-novo">Registrar entrada</button>		
+				<button class="btn btn-primary" id="btn-novo">Registrar entrada</button>
+				<button class="btn btn-warning" id="btn-retirada">Retirada pelo Morador</button>		
 		  </div>
 		</div><!-- Fecha div row -->			
 
 	<hr>		
 	
-    <table id="grid" class="table table-condensed table-hover table-striped" data-toggle="bootgrid" data-ajax="true">
+    <table id="grid" class="table table-condensed table-hover table-striped">
         <thead>
             <tr>
-                <th data-column-id="item" data-type="string" data-identifier="true">Item</th>
-                <th data-column-id="unidade" data-type="string">Unidade</th>
+                <th data-column-id="id"        data-type="numeric" data-identifier="true" style="width:6%">Id</th>
+                <th data-column-id="item"      data-type="string">Item</th>
+                <th data-column-id="unidade"   data-type="string">Unidade</th>
                 <th data-column-id="recebedor" data-type="string">Recebedor</th>
-                <th data-column-id="chegada" data-type="string" data-order="desc">Chegada</th>
-                <th data-column-id="retirada" data-type="string">Retirada</th>
-                <th data-column-id="commands" data-formatter="commands" data-sortable="false" style="width:6%"></th>
+                <th data-column-id="chegada"   data-type="string" data-order="desc">Chegada</th>
+                <th data-column-id="retirada"  data-type="string">Retirada</th>
+                <th data-column-id="commands"  data-formatter="commands" data-sortable="false" style="width:6%"></th>
             </tr>
         </thead>
     </table>	
@@ -45,9 +47,7 @@
 			<div class="modal-header">
 			Imprimir comprovante
 			</div>
-            <div class="modal-body text-center" id="iframeCorreio">
-								
-            </div>
+            <div class="modal-body text-center" id="iframeCorreio"></div>
             <div class="modal-footer">
                   <button id="btn-fechar-modal-impressao" class="btn btn-default" aria-hidden="true">Fechar</button>
             </div>
@@ -74,8 +74,30 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<script>
+<!-- Modal confirma senha Usuario -->
+<div class="modal fade" id="modal-confirmar-retirada" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="modal-confirmar-retirada">
+    <div class="modal-dialog">
+        <div class="modal-content">
+			<div class="modal-header text-center">
+				<b>O Morador está retirando <span>4</span> correspondências.</b>
+			</div>
+            <div class="modal-body text-center">
+        		<div class="row">
+        			<div class="col-md-6">
+        				Digite os 4 últimos digitos de seu CPF: <br />
+        				<input type="password" maxlength="4" class="form-control" id="ultimos_digitos_cpf" />       				
+        			</div>										
+        		</div>	
+            </div>
+            <div class="modal-footer">
+                  <button id="btn-retirar" class="btn btn-default">Confirmar</button>
+                  <button id="btn-cancelar" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
+<script>
 var abreModalImpressao = function(id) {
     varWindow = window.open (
     "http://<?php echo $_SESSION['credencial']['ambiente']=="DEV" ? "localhost/condominiosanraphael" : "www.condominiosanraphael.com.br" ?>/condominio/views/correios/impressao.html?co_item_correio="+id,
@@ -86,6 +108,10 @@ var abreModalImpressao = function(id) {
 $( "#btn-fechar-modal-impressao" ).click(function() {
 	$('#iframeCorreio').html(null);
 	$('#modal-confirmar-impressao').modal('hide');	
+});
+
+$( "#btn-retirada" ).click(function() {
+	$('#modal-confirmar-retirada').modal('show');	
 });
 
 
@@ -118,28 +144,44 @@ $( "#btn-cancelar" ).click(function() {
 	$('#co_item_correio_excluir').val(null);
 });
 
+var rowIds = [];
 var grid = $("#grid").bootgrid({
     ajax: true,
-    ajaxSettings: {
-        method: "POST",
-        cache: false
-    },
     post: function ()
     {
-        /* To accumulate custom parameter with the request object */
         return {
             id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
         };
     },    
     url: "services/correios/listarCorrespondencias.json.php",
+    selection: true,
+    multiSelect: true,
+    rowSelect: true,
+    keepSelection: true,
     formatters: {
         "commands": function(column, row)
         {
-            return "<button type=\"button\" class=\"btn btn-primary btn-xs btn-default imprimir\" data-row-id=\"" + row.co_item_correio + "\"><span class=\"glyphicon glyphicon-print\"></span></button> " + 
-                   "<button type=\"button\" class=\"btn btn-success btn-xs btn-default retirar\" data-row-id=\"" + row.co_item_correio + "\"><span class=\"glyphicon glyphicon-export\"></span></button> " + 
-                   "<button type=\"button\" class=\"btn btn-danger btn-xs btn-default excluir\" data-row-id=\"" + row.co_item_correio + "\"><span class=\"glyphicon glyphicon-trash\"></span></button>";
+            return "<button type=\"button\" class=\"btn btn-primary btn-xs btn-default imprimir\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-print\"></span></button> " + 
+                   "<button type=\"button\" class=\"btn btn-success btn-xs btn-default retirar\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-export\"></span></button> " + 
+                   "<button type=\"button\" class=\"btn btn-danger btn-xs btn-default excluir\" data-row-id=\"" + row.id + "\"><span class=\"glyphicon glyphicon-trash\"></span></button>";
         }
     }
+}).on("selected.rs.jquery.bootgrid", function(e, rows)
+{
+    for (var i = 0; i < rows.length; i++)
+    {
+        if(rowIds.indexOf(rows[i].id)){
+        	rowIds.push(rows[i].id);
+        }
+    }
+	console.log(rowIds);
+}).on("deselected.rs.jquery.bootgrid", function(e, rows)
+{
+    for (var i = 0; i < rows.length; i++)
+    {
+    	rowIds.splice(rows[i].id, 1);
+    }
+    console.log(rowIds);
 }).on("loaded.rs.jquery.bootgrid", function(){
     /* Executes after data is loaded and rendered */
     grid.find(".imprimir").on("click", function(e) {
@@ -151,8 +193,7 @@ var grid = $("#grid").bootgrid({
     });
 });
 
-
 $( "#btn-novo" ).click(function() {
-	document.location.href='?ido=<?php echo base64_encode("correios-entrada")?>';
+	 document.location.href='?ido=<?php echo base64_encode("correios-entrada")?>';
 });
 </script>

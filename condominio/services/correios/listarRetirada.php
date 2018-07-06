@@ -37,7 +37,7 @@ if (! empty($params['sort'])) {
     $orderBy = $itemOrder . ' ' . current($params['sort']);
 }
 // getting total number records without any search
-$campos = "c.co_item_correio,CONCAT(tic.no_tipo_item_correio,' nr. ',c.ds_item) AS 'item',
+$campos = "c.co_item_correio AS 'id',CONCAT(tic.no_tipo_item_correio,' nr. ',c.ds_item) AS 'item',
 			CONCAT('Torre ',u.co_torre,' unidade ',u.nu_numero) AS 'unidade',p.no_pessoa AS 'recebedor',
 			DATE_FORMAT(c.dt_hr_chegada,'%d/%m/%Y %H:%i') AS 'chegada',
 			COALESCE(DATE_FORMAT(rc.dt_hr_retirada,'%d/%m/%Y %H:%i'), '<i>Não retirado</i>') AS 'retirada'";
