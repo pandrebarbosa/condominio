@@ -1,6 +1,10 @@
 <?php
 $resultado = '';
 
+echo "<pre>";
+print_r($_POST);
+exit;
+
 $RetiradaCorreio = new RetiradaCorreio($_POST);
 
 if( $RetiradaCorreio->getCoItemCorreio() == null ){

@@ -18,7 +18,7 @@
 		<div class="row">
 		  <div class="col-sm-7 col-md-6 col-lg-6">
 				<button class="btn btn-primary" id="btn-novo">Registrar entrada</button>
-				<button class="btn btn-warning" id="btn-retirada">Retirada pelo Morador</button>		
+				<button disabled class="btn btn-warning" id="btn-retirada">Retirada pelo Morador</button>		
 		  </div>
 		</div><!-- Fecha div row -->			
 
@@ -27,13 +27,13 @@
     <table id="grid" class="table table-condensed table-hover table-striped">
         <thead>
             <tr>
-                <th data-column-id="id"        data-type="numeric" data-identifier="true" style="width:6%">Id</th>
-                <th data-column-id="item"      data-type="string">Item</th>
-                <th data-column-id="unidade"   data-type="string">Unidade</th>
-                <th data-column-id="recebedor" data-type="string">Recebedor</th>
-                <th data-column-id="chegada"   data-type="string" data-order="desc">Chegada</th>
-                <th data-column-id="retirada"  data-type="string">Retirada</th>
-                <th data-column-id="commands"  data-formatter="commands" data-sortable="false" style="width:6%"></th>
+                <th data-column-id="id"        data-type="numeric" data-identifier="true" data-width="2%">Id</th>
+                <th data-column-id="item"      data-type="string" data-width="11%">Item</th>
+                <th data-column-id="unidade"   data-type="string" data-width="7%">Unidade</th>
+                <th data-column-id="recebedor" data-type="string" data-width="10%">Recebedor</th>
+                <th data-column-id="chegada"   data-type="string" data-order="desc" data-width="6%">Chegada</th>
+                <th data-column-id="retirada"  data-type="string" data-width="6%">Retirada</th>
+                <th data-column-id="commands"  data-formatter="commands" data-sortable="false" data-width="5%"></th>
             </tr>
         </thead>
     </table>	
@@ -68,7 +68,7 @@
             <div class="modal-footer">
             <input type="hidden" id="co_item_correio_excluir">
                   <button id="btn-excluir" class="btn btn-default">Confirmar</button>
-                  <button id="btn-cancelar" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                  <button id="btn-cancelar-exclusao" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancelar</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -79,19 +79,24 @@
     <div class="modal-dialog">
         <div class="modal-content">
 			<div class="modal-header text-center">
-				<b>O Morador está retirando <span>4</span> correspondências.</b>
+				<b>O Morador está retirando <span id="qtd_correspondencias">4</span> correspondências.</b>
 			</div>
             <div class="modal-body text-center">
-        		<div class="row">
-        			<div class="col-md-6">
-        				Digite os 4 últimos digitos de seu CPF: <br />
-        				<input type="password" maxlength="4" class="form-control" id="ultimos_digitos_cpf" />       				
+        		<div class="row">										
+        			<div class="col-md-12 alert alert-warning">
+						<span id="lista_correspondencias"></span>   				
         			</div>										
-        		</div>	
+        		</div>
+        		<div class="row">
+        			<div class="col-md-12">
+        				Digite os 6 primeiros digitos do seu CPF: <br />
+        				<input type="password" maxlength="6" class="form-control input-lg" id="digitos_cpf" />       				
+        			</div>										
+        		</div>	        		
             </div>
             <div class="modal-footer">
-                  <button id="btn-retirar" class="btn btn-default">Confirmar</button>
-                  <button id="btn-cancelar" class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                  <button id="btn-retirar" class="btn btn-danger" disabled>Confirmar</button>
+                  <button id="btn-cancelar-entrega" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancelar</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -110,10 +115,35 @@ $( "#btn-fechar-modal-impressao" ).click(function() {
 	$('#modal-confirmar-impressao').modal('hide');	
 });
 
+/**
+ * Função do clique do botão de retirada
+ */
 $( "#btn-retirada" ).click(function() {
-	$('#modal-confirmar-retirada').modal('show');	
+	$('#modal-confirmar-retirada').modal('show');
+	var lista = '';
+	$.each( rowIds, function( key, value ) {
+		lista += value.id + ": " + value.item + '<br />';
+	});
+	$('#qtd_correspondencias').html(rowIds.length);
+	$('#lista_correspondencias').html(lista);
+	
+});
+/**
+ * Função do modal de retirada depois de carregado
+ */
+$('#modal-confirmar-retirada').on('shown.bs.modal', function () {
+	  $('#digitos_cpf').trigger('focus');
 });
 
+/**
+ * Função de habilitar ou não o botão de confirmar retirada 
+ */
+$( "#digitos_cpf" ).keyup(function() {
+	if($('#digitos_cpf').val().length == 6){
+		$('#btn-retirar').removeAttr( "disabled" );
+		$('#btn-retirar').focus();
+	}
+});
 
 var abreModalExclusao = function(id) {
 	$('#co_item_correio_excluir').val(id);
@@ -140,11 +170,37 @@ $( "#btn-excluir" ).click(function() {
     });
 });
 
-$( "#btn-cancelar" ).click(function() {
+
+$( "#btn-retirar" ).click(function() {
+	$.ajax({
+	  type: "POST",
+	  dataType: "json",
+	  loading: true,	  
+	  url: "services/correios/gravarListaRetirada.php",
+	  data: { listaRetirada: JSON.stringify(rowIds) }
+	}).done(function( data ) {
+		$('#co_item_correio_excluir').val(null);
+		$('#id-mensagem-correio').html('');
+		$('#modal-confirmar-exclusao').modal('hide');
+		mostrarAlertas(data.tipo,data.msg);
+		$("#grid").bootgrid("reload");
+	}).fail(function(jqXHR, textStatus, errorThrown) {
+		alert( "Erro: " + textStatus + "\n" + jqXHR.responseText );
+		loading(false);
+    });
+});
+
+$( "#btn-cancelar-exclusao" ).click(function() {
 	$('#co_item_correio_excluir').val(null);
 });
 
+$( "#btn-cancelar-entrega" ).click(function() {
+	$('#digitos_cpf').val(null);
+	$('#btn-retirar').attr("disabled", true);
+});
+
 var rowIds = [];
+var objLinha = { id: 0, item: ''};
 var grid = $("#grid").bootgrid({
     ajax: true,
     post: function ()
@@ -170,18 +226,21 @@ var grid = $("#grid").bootgrid({
 {
     for (var i = 0; i < rows.length; i++)
     {
-        if(rowIds.indexOf(rows[i].id)){
-        	rowIds.push(rows[i].id);
-        }
+		if(rowIds.indexOf(rows[i].id) == -1){
+			objLinha = {id: rows[i].id, item: rows[i].item};
+			rowIds.push(objLinha);
+		}
+		$('#btn-retirada').removeAttr( "disabled" );
     }
-	console.log(rowIds);
 }).on("deselected.rs.jquery.bootgrid", function(e, rows)
 {
-    for (var i = 0; i < rows.length; i++)
-    {
-    	rowIds.splice(rows[i].id, 1);
+    if(rowIds.length == 1){
+    	$('#btn-retirada').attr("disabled", true);
     }
-    console.log(rowIds);
+    for (var i = 0; i < rows.length; i++) {
+    	objLinha = {id: rows[i].id, item: rows[i].item};
+    	rowIds.splice(rowIds.indexOf(rows[i].id), 1);
+    }
 }).on("loaded.rs.jquery.bootgrid", function(){
     /* Executes after data is loaded and rendered */
     grid.find(".imprimir").on("click", function(e) {
