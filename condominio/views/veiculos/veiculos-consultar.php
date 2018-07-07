@@ -2,156 +2,49 @@
 <div class="panel panel-default">
   <div class="panel-heading">
 	<ol class="breadcrumb">
-	  <li><a href="?ido=inicio">Início</a></li>
+	  <li><a href="?ido=<?php echo base64_encode("inicio")?>">Início</a></li>
 	  <li class="active">Consulta de veículos</li>
 	</ol>
   </div>
-  <div class="panel-body">
-
-		<div class="form-inline">
-		  <div class="form-group">
-		    <input type="text" class="form-control placa" style="text-transform:uppercase" placeholder="Placa" id="ds_placa">
-		  </div>
-		  <div class="form-group">
-			<input type="text" class="form-control" id="no_modelo_veiculo" placeholder="Nome/modelo">
-			<input type="hidden" id="co_modelo_veiculo">
-		  </div>
-		  <button class="btn btn-info" id="btn-buscar">Buscar</button>
-		  <button class="btn btn-warning" id="btn-reset">Limpar</button>
-		</div>		
-				
-	<hr>		
-	<div id="grid"></div>
+  <div class="panel-body">		
+	<table id="grid" class="table table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                <th data-column-id="tipo"      data-type="string" data-sortable="true" data-width="10%">Tipo</th>
+                <th data-column-id="veiculo"   data-type="string" data-sortable="true" data-width="23%">Veículo</th>
+                <th data-column-id="placa"     data-type="string" data-sortable="false" data-width="20%">Placa</th>
+                <th data-column-id="garagem"   data-type="string" data-sortable="true" data-width="13%">Garagem</th>
+                <th data-column-id="torre"     data-type="string" data-sortable="true" data-width="13%">Torre</th>
+                <th data-column-id="unidade"   data-type="string" data-sortable="true" data-width="13%">Unidade</th>
+                <th data-column-id="commands"  data-formatter="commands" data-sortable="false" data-width="9%"></th>
+            </tr>
+        </thead>
+    </table>
   </div>
 </div>
 
 <script>
-var paginacao = function(total, qtdRegPg, pagina, ds_placa, co_modelo_veiculo) {
-
-	pagina = (pagina > 0) ? pagina : 1;
-    var menos = pagina - 1;
-    var mais = pagina + 1;
-    var divisao = total/qtdRegPg;
-    var pgs = Math.ceil(divisao);
-    
-    var paginacao = "<ul class='pagination'>"; 
-    	paginacao += ""; 
-        if (pgs > 1) {
-
-            // Mostragem de pagina
-            if (menos > 0) {
-            	paginacao += "<li class=\"active\"><a style=\"cursor: pointer;\" href=\"javascript:grid("+qtdRegPg+"," + menos + ",'" + ds_placa+ "','" + co_modelo_veiculo + "')\">anterior</a></li>";
-            }
-
-            // Listando as paginas
-            for (var i=1;i<=pgs;i++) {
-                if (i != pagina) {
-                	paginacao += "<li class=\"active\"><a style=\"cursor: pointer;\" href=\"javascript:grid("+qtdRegPg+"," + i + ",'" + ds_placa+ "','" + co_modelo_veiculo + "')\">" + i + "</a></li>";
-                } else {
-                	paginacao += "<li class=\"disabled\"><a>" + i + "</a></li>";
-                }
-            }
-
-            if (mais <= pgs) {
-            	paginacao += "<li class=\"active\"><a style=\"cursor: pointer;\" href=\"javascript:grid("+qtdRegPg+"," + mais + ",'" + ds_placa+ "','" + co_modelo_veiculo + "')\">próxima</a></li>";
-    		}
-    	}
-        paginacao += "</ul>";
-
-    	return paginacao;
-};
-
-var montaResultadoTabela = function(result, header, divResultado, pagina, ds_placa, co_modelo_veiculo, maximo) {
-	var total=0;
-	var tabela = "<table class='table table-striped'>";
-		tabela += "<tr>";
-		$.each(header, function (key, val) {
-			tabela += "<th>" + val + "</th>";
-		});
-		tabela += "<th>Ação</th>";
-		tabela += "</tr>";
-
-	var i=1;
-	$.each(result, function (key, val) {
-		tabela += "<tr>";
-		if(i>1){
-			$.each(header, function (k, v) {
-				tabela += "<td>" + val[v] + "</td>";
-			});
-			tabela += "<td>";
-			tabela += "<a class='btn btn-primary btn-sm' title='Detalhar' href='default.php?ido=moradores-visualizar&co_unidade="+val.co_unidade+"&nu_numero="+val.nu_numero+"&no_torre="+val.co_torre+"'><i class='glyphicon glyphicon-zoom-in'></i></a>";
-			tabela += "</td>";
-			tabela += "</tr>";
-		}else{
-			total = val.total;
-		}
-		i++;
-	});
-	tabela += "</table>";
-	
-	tabela += paginacao(total, maximo, pagina, ds_placa, co_modelo_veiculo);
-	
-	$('#' + divResultado).html(tabela).fadeIn('slow');
-};
-
-var grid = function(maximo, pagina, ds_placa, co_modelo_veiculo) {
-	$.ajax({
-	  type: "POST",
-	  dataType: "json",
-	  loading: true,	  
-	  url: "services/veiculos/listar.php",
-	  data: { maximo: maximo, pagina: pagina, ds_placa: ds_placa, co_modelo_veiculo: co_modelo_veiculo }
-	}).done(function( data ) {
-		var header = ["Tipo", "Veículo", "Placa", "Garagem"];
-		montaResultadoTabela(data, header, "grid", pagina, ds_placa, co_modelo_veiculo, maximo);
-	}).fail(function(jqXHR, textStatus, errorThrown) {
-		alert( "Erro: " + textStatus + "\n" + jqXHR.responseText );
-		loading(false);
+/**
+ * Função do grid
+ */
+var grid = $("#grid").bootgrid({
+    ajax: true,
+    post: function ()
+    {
+        return {
+            id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
+        };
+    },    
+    url: "services/veiculos/listarVeiculos.json.php",
+    formatters: {
+        "commands": function(column, row)
+        {
+            return "<button type=\"button\" class=\"btn btn-primary btn-xs btn-default detalhar\" data-row-counidade=\"" + row.co_unidade + "\" data-row-unidade=\"" + row.unidade + "\" data-row-torre=\"" + row.torre + "\"><span class=\"glyphicon glyphicon-zoom-in\"></span></button> ";
+        }
+    }
+}).on("loaded.rs.jquery.bootgrid", function(){
+    grid.find(".detalhar").on("click", function(e) {
+    	document.location.href="default.php?ido=<?php echo base64_encode("moradores-visualizar")?>&co_unidade=" + $(this).data("row-counidade") + "&nu_numero=" + $(this).data("row-unidade") + "&no_torre=" + $(this).data("row-torre");
     });
-}; grid(10, null, $("#ds_placa").val(), $("#co_modelo_veiculo").val());
-
-
-$( "#btn-buscar" ).click(function() {
-  grid(10, null, $("#ds_placa").val(), $("#co_modelo_veiculo").val());
 });
-$( "#ds_placa" ).keypress(function(e) {
-  if(e.which == 13) {
-  	grid(10, null, $("#ds_placa").val(), $("#co_modelo_veiculo").val());
-  }
-});
-$( "#no_modelo_veiculo" ).keypress(function(e) {
-	  if(e.which == 13) {
-	  	grid(10, null, $("#ds_placa").val(), $("#co_modelo_veiculo").val());
-	  }
-});	
-$( "#btn-reset" ).click(function() {
-	$("#no_modelo_veiculo").val(null);
-	$("#co_modelo_veiculo").val(null);
-	$("#ds_placa").val(null);
-	grid(10, null, $("#ds_placa").val(), $("#co_modelo_veiculo").val());
-});	
-
-$( "#no_modelo_veiculo" ).focus(function() {
-	$("#ds_placa").val(null);
-});
-$( "#ds_placa" ).focus(function() {
-	$("#no_modelo_veiculo").val(null);
-	$("#co_modelo_veiculo").val(null);
-});
-var options = {
-		url: function(phrase) {
-			return "services/veiculos/listarVeiculoModeloAutoComplete.php?no_modelo_veiculo=" + phrase + "&format=json";
-		},
-		getValue: "no_modelo_veiculo",
-		adjustWidth:false,
-		list: {
-
-			onSelectItemEvent: function() {
-				var co_modelo_veiculo = $("#no_modelo_veiculo").getSelectedItemData().co_modelo_veiculo;
-
-				$("#co_modelo_veiculo").val(co_modelo_veiculo).trigger("change");
-			}
-		}		
-	};
-$("#no_modelo_veiculo").easyAutocomplete(options);	
 </script>
