@@ -176,18 +176,16 @@
 		});
 
 		var MostrarAlertas = function( tipo,msg ) {
-			$('#alertas').append("<span class=\"texto-msg\">" + msg + "</span>");			
-			if(tipo == "sucesso"){                                
-				$('#alertas').removeClass('alert-danger').addClass('alert-success').show();
-			}else if(tipo == "erro"){
-				$('#alertas').removeClass('alert-success').addClass('alert-danger').show();
+			$('#alertas').append("<span class=\"texto-msg\">" + msg + "</span>");
+			$('#alertas').removeClass();
+			$('#alertas').addClass('alert alert-dismissable alert-' + tipo).show('slow');
+			if(tipo == "danger"){
 				$('#usuario').val();
 				$('#senha').val();
 			}
-			
 			setInterval(function(){ 
 				$('#alertas').fadeOut('slow', function() {
-					if(tipo == "sucesso"){
+					if(tipo == "success"){
 						window.location='default.php?ido=aW5pY2lv';
 					}else{
                         $('#btn-entrar').removeAttr("disabled");

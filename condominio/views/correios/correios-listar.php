@@ -27,13 +27,13 @@
     <table id="grid" class="table table-condensed table-hover table-striped">
         <thead>
             <tr>
-                <th data-column-id="id"        data-type="numeric" data-identifier="true" data-width="2%">Id</th>
-                <th data-column-id="item"      data-type="string" data-width="11%">Item</th>
-                <th data-column-id="unidade"   data-type="string" data-width="7%">Unidade</th>
-                <th data-column-id="recebedor" data-type="string" data-width="10%">Recebedor</th>
-                <th data-column-id="chegada"   data-type="string" data-order="desc" data-width="6%">Chegada</th>
-                <th data-column-id="retirada"  data-type="string" data-width="6%">Retirada</th>
-                <th data-column-id="commands"  data-formatter="commands" data-sortable="false" data-width="5%"></th>
+                <th data-column-id="id"        data-type="numeric" data-identifier="true" data-width="5%">Id</th>
+                <th data-column-id="item"      data-type="string" data-width="27%">Item</th>
+                <th data-column-id="unidade"   data-type="string" data-width="13%">Unidade</th>
+                <th data-column-id="recebedor" data-type="string" data-width="20%">Recebedor</th>
+                <th data-column-id="chegada"   data-type="string" data-order="desc" data-width="13%">Chegada</th>
+                <th data-column-id="retirada"  data-type="string" data-width="13%">Retirada</th>
+                <th data-column-id="commands"  data-formatter="commands" data-sortable="false" data-width="9%"></th>
             </tr>
         </thead>
     </table>	
@@ -96,7 +96,7 @@
         		<div class="row">
         			<div class="col-md-12">
         				<label for="exampleInputEmail1">Digite o seu CPF:</label>
-        				<input type="password" maxlength="11" class="form-control input-lg" id="digitos_cpf" />       				
+        				<input type="password" autocomplete="off" maxlength="11" class="form-control input-lg" id="digitos_cpf" />       				
         			</div>										
         		</div>	        		
             </div>
