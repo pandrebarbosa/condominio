@@ -125,13 +125,18 @@ class PessoaDAO extends Db {
 		}
 		
 		$res = $this->connBanco->selecionar( "tb_pessoa", $arrayCampos, $where, NULL, NULL, NULL, FALSE );
-	
-		$Pessoa->setCoPessoa ( $res[0]['co_pessoa'] );
-		$Pessoa->setNoPessoa ( $res[0]['no_pessoa'] );
-		$Pessoa->setDsFoto($res[0]['ds_foto']);
-		$Pessoa->setDtNascimento($res[0]['dt_nascimento']);
-		$Pessoa->setNuRg($res[0]['nu_rg']);
-		$Pessoa->setNuCpf( $res[0]['nu_cpf'] );
+		if ($res) {
+		    $Pessoa->setCoPessoa ( $res[0]['co_pessoa'] );
+		    $Pessoa->setNoPessoa ( $res[0]['no_pessoa'] );
+		    $Pessoa->setDsFoto($res[0]['ds_foto']);
+		    $Pessoa->setDtNascimento($res[0]['dt_nascimento']);
+		    $Pessoa->setNuRg($res[0]['nu_rg']);
+		    $Pessoa->setNuCpf( $res[0]['nu_cpf'] );
+		    
+		    return true;
+		} else {
+		    return false;
+		}
 	}	
 
 	/**

@@ -2,11 +2,12 @@
 class RetiradaCorreio {
 	private $co_item_correio;
 	private $co_funcionario_retirada;
+	private $co_pessoa_retirada;
 	private $dt_hr_retirada;
 	private $ds_observacao;
 	private $dt_hr_registro;
-	
-	public function __construct($post=null) {
+
+    public function __construct($post=null) {
 		if($post != null){
 			foreach ($post as $keyPost=>$valPost){
 				foreach ( $this as $keyObj => $valueObj ) {
@@ -39,6 +40,12 @@ class RetiradaCorreio {
 	public function setCoFuncionarioRetirada($co_funcionario_retirada) {
 		$this->co_funcionario_retirada = $co_funcionario_retirada;
 		return $this;
+	}
+	public function getCoPessoaRetirada(){
+	    return $this->co_pessoa_retirada;
+	}
+	public function setCoPessoaRetirada($co_pessoa_retirada){
+	    $this->co_pessoa_retirada = $co_pessoa_retirada;
 	}
 	public function getDtHrRetirada() {
 		return $this->dt_hr_retirada;

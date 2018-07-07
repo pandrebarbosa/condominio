@@ -51,27 +51,27 @@ if($moradores){
                                             					$res[0]['ds_observacao'],
                                             					$emailDestinatario);
 					if($enviou){
-						$resultado =  array("tipo" => "sucesso",
+						$resultado =  array("tipo" => "success",
 											"msg" => "Correspondência gravada com sucesso. Morador alertado no email(<i>".$EnvioEmail->getDsEmail()."</i>).",
 											"id" => $Correio->getCoItemCorreio());
 					}else{
-						$resultado =  array("tipo" => "sucesso",
+						$resultado =  array("tipo" => "info",
 											"msg" => "Correspondência gravada com sucesso. Não houve envio de email por erro desconhecido. (<i>".$EnvioEmail->getDsEmail()."</i>)",
 											"id" => $Correio->getCoItemCorreio());	
 					}
 		}else{
-			$resultado =  array("tipo" => "sucesso",
+			$resultado =  array("tipo" => "info",
 								"msg" => "Correspondência gravada com sucesso. Não houve envio de email, pois ja houve envio com menos de 2 horas.(<i>".$EnvioEmail->getDsEmail()."</i>).",
 								"id" => $Correio->getCoItemCorreio());
 		}
 	}else{
-		$resultado =  array("tipo" => "sucesso",
+		$resultado =  array("tipo" => "info",
 							"msg" => "Correspondência gravada com sucesso. Não houve envio de email, pois não há email cadastrado.",
 							"id" => $Correio->getCoItemCorreio());
 	}
 
 }else{
-	$resultado =  array("tipo" => "sucesso",
+	$resultado =  array("tipo" => "info",
 						"msg" => "Correspondência gravada com sucesso. Não houve envio de email, pois não há usuario e nem email cadastrados.",
 						"id" => $Correio->getCoItemCorreio());	
 }

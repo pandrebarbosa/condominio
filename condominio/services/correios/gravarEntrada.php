@@ -42,17 +42,17 @@ if($emailsDosMoradores){
 	    $res[0]['ds_observacao'],
 	    $emailDestinatario);
 	if($enviou){
-	    $resultado =  array("tipo" => "sucesso",
+	    $resultado =  array("tipo" => "success",
 	        "msg" => "Correspondência gravada com sucesso. Morador(es) alertado(s) no email.",
 	        "id" => $Correio->getCoItemCorreio());
 	}else{
-	    $resultado =  array("tipo" => "sucesso",
+	    $resultado =  array("tipo" => "info",
 	        "msg" => "Correspondência gravada com sucesso. Não houve envio de email por erro desconhecido.",
 	        "id" => $Correio->getCoItemCorreio());
 	}
 
 }else{
-	$resultado =  array("tipo" => "sucesso",
+	$resultado =  array("tipo" => "info",
 						"msg" => "Correspondência gravada com sucesso. Não houve envio de email, pois não há morador e email cadastrado e autorizado.",
 						"id" => $Correio->getCoItemCorreio());	
 }

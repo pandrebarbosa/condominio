@@ -17,7 +17,7 @@ if($AnimalDomestico->getCoRaca() == null && $Raca->getNoRaca() != null){
 }
 
 $AnimalDomesticoDAO->gravarAnimalDomestico($AnimalDomestico);
-$resultado =  array("tipo" => "sucesso", "msg" => "Animal doméstico salvo com sucesso.");
+$resultado =  array("tipo" => "success", "msg" => "Animal doméstico salvo com sucesso.");
 
 echo json_encode($resultado);
 exit;

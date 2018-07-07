@@ -14,7 +14,7 @@ $Unidade->setStAtivo(true);
 
 $UnidadeDAO->gravarUnidade($Unidade);
 
-$resultado =  array("tipo" => "sucesso", "msg" => "Unidade salva com sucesso.", "id" => $Unidade->getCoUnidade());
+$resultado =  array("tipo" => "success", "msg" => "Unidade salva com sucesso.", "id" => $Unidade->getCoUnidade());
 
 
 echo json_encode($resultado);

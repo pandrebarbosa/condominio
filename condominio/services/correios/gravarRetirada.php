@@ -10,7 +10,7 @@ $RetiradaCorreioDAO = new RetiradaCorreioDAO();
 
 $RetiradaCorreioDAO->gravarRetiradaCorreio($RetiradaCorreio);
 
-$resultado =  array("tipo" => "sucesso", "msg" => "Correspondência retirada com sucesso.");
+$resultado =  array("tipo" => "success", "msg" => "Correspondência retirada com sucesso.");
 
 echo json_encode($resultado);
 exit;

@@ -8,7 +8,7 @@ include('validarCadastro.php');
 $TipoUnidadeDAO = new TipoUnidadeDAO;
 $TipoUnidadeDAO->gravarTipoUnidade($TipoUnidade);
 
-$resultado =  array("tipo" => "sucesso", "msg" => "Tipo de Unidade salva com sucesso.", "id" => $TipoUnidade->getCoTipoUnidade());
+$resultado =  array("tipo" => "success", "msg" => "Tipo de Unidade salva com sucesso.", "id" => $TipoUnidade->getCoTipoUnidade());
 
 echo json_encode($resultado);
 exit;

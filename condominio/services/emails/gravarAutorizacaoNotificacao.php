@@ -11,6 +11,6 @@ $MoradorNotificacaoDAO = new MoradorNotificacaoDAO();
 
 $MoradorNotificacaoDAO->gravarNotificacaoEmail($MoradorNotificacao);
 
-$resultado =  array("id"=>null, "tipo" => "sucesso", "msg" => "Salvo com sucesso.");
+$resultado =  array("id"=>null, "tipo" => "success", "msg" => "Salvo com sucesso.");
 
 echo json_encode($resultado);

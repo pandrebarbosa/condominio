@@ -11,7 +11,7 @@ $co_pessoa = isset($_POST['co_pessoa']) ? $_POST['co_pessoa'] : '';
 $banco = new banco();
 $res = $banco->altera("tb_morador","st_ativo=false","co_pessoa=".$co_pessoa." AND nu_numero=".$nu_numero." AND co_tipo_unidade=".$co_tipo_unidade." AND co_torre=".$co_torre,FALSE);
 	
-$resultado =  array("tipo" => "sucesso", "msg" => "Exclusão feita com sucesso!");
+$resultado =  array("tipo" => "success", "msg" => "Exclusão feita com sucesso!");
 
 echo json_encode($resultado);
 exit;

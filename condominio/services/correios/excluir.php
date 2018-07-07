@@ -8,7 +8,7 @@ $Correio = new Correio($_POST);
 $CorreioDAO = new CorreioDAO();
 
 $CorreioDAO->excluirCorresnpodencia($Correio);
-$resultado =  array("id"=> $Correio->getCoItemCorreio(), "tipo" => "sucesso", "msg" => "Exclusão feita com sucesso!");
+$resultado =  array("id"=> $Correio->getCoItemCorreio(), "tipo" => "success", "msg" => "Exclusão feita com sucesso!");
 
 echo json_encode($resultado);
 exit;

@@ -18,11 +18,11 @@ if($_POST['enviar_agora'] == 'true' || $_POST['enviar_agora'] === true){
 	$res = $GrupoMensagemDAO->listarGrupo($GrupoMensagem);
 	$metodo = $res[0]['no_metodo'];
 	$MensagemDAO->$metodo($Mensagem);
-	$resultado =  array("tipo" => "sucesso", "msg" => "Gravação e envio com sucesso.", "id"=>$Mensagem->getCoMensagem());
+	$resultado =  array("tipo" => "success", "msg" => "Gravação e envio com sucesso.", "id"=>$Mensagem->getCoMensagem());
 }else{
 	$Mensagem->setDtHrEnvio(null);
 	$MensagemDAO->gravarMensagem($Mensagem);
-	$resultado =  array("tipo" => "sucesso", "msg" => "Gravação com sucesso.", "id"=>$Mensagem->getCoMensagem());
+	$resultado =  array("tipo" => "success", "msg" => "Gravação com sucesso.", "id"=>$Mensagem->getCoMensagem());
 }
 
 echo json_encode($resultado);

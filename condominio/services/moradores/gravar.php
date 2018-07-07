@@ -29,7 +29,7 @@ $Morador->setDtInicio( toolBox::formataData($Morador->getDtInicio(), "G") );
 $PessoaDAO->gravarPessoa($Pessoa);
 $Morador->setCoPessoa($Pessoa->getCoPessoa());
 $MoradorDAO->gravarMorador($Morador);
-$resultado =  array("tipo" => "sucesso", "msg" => "Morador salva com sucesso.");
+$resultado =  array("tipo" => "success", "msg" => "Morador salva com sucesso.");
 
 /**
  * Se for proprietário do imovel, cadastrar como tal.

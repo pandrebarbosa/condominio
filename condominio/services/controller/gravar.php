@@ -8,7 +8,7 @@ include('validarCadastro.php');
 $ControllerDAO = new ControllerDAO;
 $ControllerDAO->gravarController($Controller);
 
-$resultado =  array("tipo" => "sucesso", "msg" => "Unidade salva com sucesso.", "id" => $Controller->getCoController());
+$resultado =  array("tipo" => "success", "msg" => "Unidade salva com sucesso.", "id" => $Controller->getCoController());
 
 echo json_encode($resultado);
 exit;

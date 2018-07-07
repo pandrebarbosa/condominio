@@ -17,10 +17,10 @@ $enviou = Email::emailResetarSenha($destinatario[0]['ds_email']);
 
 $resultado = "";
 if($enviou){
-    $resultado =  array("tipo" => "sucesso",
+    $resultado =  array("tipo" => "success",
         "msg" => "Senha alterada com sucesso. Usuário alertado por email.");
 }else{
-    $resultado =  array("tipo" => "sucesso",
+    $resultado =  array("tipo" => "success",
         "msg" => "Senha alterada com sucesso. Não houve envio de email por erro desconhecido.");
 }
 

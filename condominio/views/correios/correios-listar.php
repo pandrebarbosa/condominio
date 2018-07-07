@@ -37,7 +37,7 @@
             </tr>
         </thead>
     </table>	
-
+	<input type="hidden" id="co_funcionario_retirada" value="<?php echo $_SESSION['credencial']['co_pessoa']?>" >
   </div>
 </div>
 <!-- Modal confirma CPF -->
@@ -79,9 +79,9 @@
     <div class="modal-dialog">
         <div class="modal-content">
 			<div class="modal-header text-center">
-				<b>O Morador está retirando <span id="qtd_correspondencias">4</span> correspondências.</b>
+				<b>O Morador está retirando <span id="qtd_correspondencias"></span> correspondências.</b>
 			</div>
-            <div class="modal-body text-center">
+            <div class="modal-body">
         		<div class="row">										
         			<div class="col-md-12 alert alert-warning">
 						<span id="lista_correspondencias"></span>   				
@@ -89,14 +89,20 @@
         		</div>
         		<div class="row">
         			<div class="col-md-12">
-        				Digite os 6 primeiros digitos do seu CPF: <br />
-        				<input type="password" maxlength="6" class="form-control input-lg" id="digitos_cpf" />       				
+        				<label for="exampleInputEmail1">Caso seja necessário, digite uma observação:</label>
+    					<textarea class="form-control" rows="3" id="ds_observacao">Retirada em lote mediante CPF do morador.</textarea>				
+        			</div>										
+        		</div>        		
+        		<div class="row">
+        			<div class="col-md-12">
+        				<label for="exampleInputEmail1">Digite o seu CPF:</label>
+        				<input type="password" maxlength="11" class="form-control input-lg" id="digitos_cpf" />       				
         			</div>										
         		</div>	        		
             </div>
             <div class="modal-footer">
                   <button id="btn-retirar" class="btn btn-danger" disabled>Confirmar</button>
-                  <button id="btn-cancelar-entrega" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                  <button id="btn-cancelar-entrega" class="btn btn-default" aria-hidden="true">Cancelar</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -126,8 +132,8 @@ $( "#btn-retirada" ).click(function() {
 	});
 	$('#qtd_correspondencias').html(rowIds.length);
 	$('#lista_correspondencias').html(lista);
-	
 });
+
 /**
  * Função do modal de retirada depois de carregado
  */
@@ -139,9 +145,11 @@ $('#modal-confirmar-retirada').on('shown.bs.modal', function () {
  * Função de habilitar ou não o botão de confirmar retirada 
  */
 $( "#digitos_cpf" ).keyup(function() {
-	if($('#digitos_cpf').val().length == 6){
+	if($('#digitos_cpf').val().length == 11){
 		$('#btn-retirar').removeAttr( "disabled" );
 		$('#btn-retirar').focus();
+	}else{
+		$('#btn-retirar').attr("disabled", true);
 	}
 });
 
@@ -170,18 +178,21 @@ $( "#btn-excluir" ).click(function() {
     });
 });
 
-
+/**
+ * Função do clique do botão de confirmação de retirada
+ */
 $( "#btn-retirar" ).click(function() {
 	$.ajax({
 	  type: "POST",
 	  dataType: "json",
 	  loading: true,	  
 	  url: "services/correios/gravarListaRetirada.php",
-	  data: { listaRetirada: JSON.stringify(rowIds) }
+	  data: { listaRetirada: JSON.stringify(rowIds),
+			  cpf: $('#digitos_cpf').val(),
+			  co_funcionario_retirada: $('#co_funcionario_retirada').val(),
+			  ds_observacao: $('#ds_observacao').val() }
 	}).done(function( data ) {
-		$('#co_item_correio_excluir').val(null);
-		$('#id-mensagem-correio').html('');
-		$('#modal-confirmar-exclusao').modal('hide');
+		cancelarEntrega();
 		mostrarAlertas(data.tipo,data.msg);
 		$("#grid").bootgrid("reload");
 	}).fail(function(jqXHR, textStatus, errorThrown) {
@@ -190,15 +201,9 @@ $( "#btn-retirar" ).click(function() {
     });
 });
 
-$( "#btn-cancelar-exclusao" ).click(function() {
-	$('#co_item_correio_excluir').val(null);
-});
-
-$( "#btn-cancelar-entrega" ).click(function() {
-	$('#digitos_cpf').val(null);
-	$('#btn-retirar').attr("disabled", true);
-});
-
+/**
+ * Função do grid
+ */
 var rowIds = [];
 var objLinha = { id: 0, item: ''};
 var grid = $("#grid").bootgrid({
@@ -252,7 +257,24 @@ var grid = $("#grid").bootgrid({
     });
 });
 
+function cancelarEntrega(){
+	$('#digitos_cpf').val(null);
+	$('#ds_observacao').val(null);
+	$('#ds_observacao').val("Retirada em lote mediante CPF do morador.");
+	$('#btn-retirar').attr("disabled", true);
+	$('#modal-confirmar-retirada').modal('hide');
+}
+
+/**
+ * Funções de clique
+ */
 $( "#btn-novo" ).click(function() {
 	 document.location.href='?ido=<?php echo base64_encode("correios-entrada")?>';
+});
+ $( "#btn-cancelar-exclusao" ).click(function() {
+	$('#co_item_correio_excluir').val(null);
+});
+$( "#btn-cancelar-entrega" ).click(function() {
+	cancelarEntrega();
 });
 </script>

@@ -16,7 +16,7 @@ if( $Veiculo->getCoModeloVeiculo() == NULL && $ModeloVeiculo->getNoModeloVeiculo
 	$Veiculo->setCoModeloVeiculo($ModeloVeiculo->getCoModeloVeiculo());
 }	
 $VeiculoDAO->gravarVeiculo($Veiculo);
-$resultado =  array("tipo" => "sucesso", "msg" => "Veículo salvo com sucesso.");
+$resultado =  array("tipo" => "success", "msg" => "Veículo salvo com sucesso.");
 
 echo json_encode($resultado);
 exit;

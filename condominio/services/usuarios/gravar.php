@@ -19,12 +19,12 @@ $existe = $UsuarioDAO->listarUsuarioExistente($Usuario);
 if($existe){
 	$UsuarioDAO->gravarUsuario($Usuario);
 	$MoradorNotificacaoDAO->gravarNotificacaoEmail($moradorNotificacao);
-	$resultado =  array("tipo" => "sucesso", "msg" => "Alteração salva com sucesso.", "id" => $Usuario->getCoPessoa());
+	$resultado =  array("tipo" => "success", "msg" => "Alteração salva com sucesso.", "id" => $Usuario->getCoPessoa());
 }else{
 	//Grava a senha inicial
 	$Usuario->setDsSenha(md5("123456789"));
 	$UsuarioDAO->gravarUsuario($Usuario);
-	$resultado =  array("tipo" => "sucesso", "msg" => "Usuário salvo com sucesso.", "id" => $Usuario->getCoPessoa());
+	$resultado =  array("tipo" => "success", "msg" => "Usuário salvo com sucesso.", "id" => $Usuario->getCoPessoa());
 }
 
 echo json_encode($resultado);

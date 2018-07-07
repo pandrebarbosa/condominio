@@ -165,8 +165,6 @@ class MoradorDAO extends Db {
 		}else{
 			return false;
 		}
-	
-	
 	}
 	
 	/**

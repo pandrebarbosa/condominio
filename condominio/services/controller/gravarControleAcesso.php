@@ -10,7 +10,7 @@ $Controller = new Controller($_POST);
 $ControllerDAO = new ControllerDAO();
 $ControllerDAO->gravarControllerAcesso($Controller);
 
-$resultado =  array("tipo" => "sucesso", "msg" => "Unidade salva com sucesso.", "id"=>$Controller->getCoTipoUsuario());
+$resultado =  array("tipo" => "success", "msg" => "Unidade salva com sucesso.", "id"=>$Controller->getCoTipoUsuario());
 
 echo json_encode($resultado);
 exit;

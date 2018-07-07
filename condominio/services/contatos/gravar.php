@@ -10,7 +10,7 @@ $ContatoDAO = new ContatoDAO();
 
 $ContatoDAO->gravarContato($Contato);
 
-$resultado =  array("id"=>$Contato->getCoPessoa(), "tipo" => "sucesso", "msg" => "Contato salvo com sucesso.");
+$resultado =  array("id"=>$Contato->getCoPessoa(), "tipo" => "success", "msg" => "Contato salvo com sucesso.");
 
 echo json_encode($resultado);
 exit;

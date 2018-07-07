@@ -5,9 +5,9 @@ $senha    = (isset($_POST['senha']) ? $_POST['senha'] : '');
 $resultado = '';
 
 if (trim($usuario) == '') {
-    $resultado =  array("tipo" => "erro", "msg" => "O Usuário é obrigatório!");
+    $resultado =  array("tipo" => "danger", "msg" => "O Usuário é obrigatório!");
 } else if (trim($senha) == '') {
-    $resultado =  array("tipo" => "erro", "msg" => "A Senha é obrigatória!");
+    $resultado =  array("tipo" => "danger", "msg" => "A Senha é obrigatória!");
 }
 
 if ($resultado == '') {
@@ -28,7 +28,7 @@ if ($resultado == '') {
     
     if ($confere_usuario) {
         if (md5($senha) != $confere_usuario[0]['ds_senha']) {	
-        	$resultado =  array("tipo" => "erro", "msg" => "Senha incorreta!");
+        	$resultado =  array("tipo" => "danger", "msg" => "Senha incorreta!");
     	} else {
 	        session_name("Condominio");
 	        session_start();
@@ -54,13 +54,13 @@ if ($resultado == '') {
 	        $res_configuracao = $banco->seleciona("configuracao","ds_remetente_emails,ds_copia_emails,ds_dest_email_cadastro", NULL, NULL, NULL, NULL, FALSE);
 	        $_SESSION['configuracao'] = $res_configuracao[0];
 	        
-	        $resultado =  array("tipo" => "sucesso", "msg" => "Senha correta. Aguarde!");	
+	        $resultado =  array("tipo" => "success", "msg" => "Senha correta. Aguarde!");	
 			if($ambiente=="PROD"){
 				$banco->insere("tb_registros_acessos","co_pessoa,dt_hr_acesso, dados_acesso", $confere_usuario[0]['co_pessoa'].",NOW(),'".toolBox::verificaNavegadorSO()."'");
 			}
 		}
     }else{
-    	$resultado =  array("tipo" => "erro", "msg" => "Erro no login!");
+    	$resultado =  array("tipo" => "danger", "msg" => "Erro no login!");
     }
 }
 

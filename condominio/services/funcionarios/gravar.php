@@ -41,14 +41,14 @@ if( $Funcionario->getCoPessoa() == null ){
 	$Funcionario->setCoPessoa($Pessoa->getCoPessoa());
 	
 	$FuncionarioDAO->gravarFuncionario($Funcionario);
-	$resultado =  array("tipo" => "sucesso", "msg" => "Funcionário <em>". $Pessoa->getNoPessoa() ."</em> salvo com sucesso.", "id" => $Pessoa->getCoPessoa());
+	$resultado =  array("tipo" => "success", "msg" => "Funcionário <em>". $Pessoa->getNoPessoa() ."</em> salvo com sucesso.", "id" => $Pessoa->getCoPessoa());
 
 }else{
 
 	$PessoaDAO->gravarPessoa($Pessoa);
 	$FuncionarioDAO->gravarFuncionario($Funcionario);
 	
-	$resultado =  array("tipo" => "sucesso", "msg" => "Alteração salva com sucesso.", "id" => $Pessoa->getCoPessoa());
+	$resultado =  array("tipo" => "success", "msg" => "Alteração salva com sucesso.", "id" => $Pessoa->getCoPessoa());
 	
 }
 

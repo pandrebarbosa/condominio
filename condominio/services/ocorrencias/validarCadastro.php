@@ -8,27 +8,27 @@ $ds_ocorrencia = isset($_POST['ds_ocorrencia']) ? $_POST['ds_ocorrencia'] : '';
 $dt_hr_ocorrencia = isset($_POST['dt_hr_ocorrencia']) ? toolBox::formataDataHora($_POST['dt_hr_ocorrencia'],"G") : '';
 
 if( empty( $co_unidade )){
-	$resultado =  array("id" => null, "tipo" => "erro", "msg" => "Unidade não identificada!");
+	$resultado =  array("id" => null, "tipo" => "danger", "msg" => "Unidade não identificada!");
 	echo json_encode($resultado);
 	exit;
 }
 if( empty( $co_tipo_ocorrencia )){
-	$resultado =  array("id" => null, "tipo" => "erro", "msg" => "Tipo de ocorrência não identificado!");
+	$resultado =  array("id" => null, "tipo" => "danger", "msg" => "Tipo de ocorrência não identificado!");
 	echo json_encode($resultado);
 	exit;
 }
 if( empty( $ds_titulo )){
-	$resultado =  array("id" => null, "tipo" => "erro", "msg" => "Título não preenchido!");
+	$resultado =  array("id" => null, "tipo" => "danger", "msg" => "Título não preenchido!");
 	echo json_encode($resultado);
 	exit;
 }
 if( empty( $ds_ocorrencia )){
-	$resultado =  array("id" => null, "tipo" => "erro", "msg" => "Ocorrência não preenchida!");
+	$resultado =  array("id" => null, "tipo" => "danger", "msg" => "Ocorrência não preenchida!");
 	echo json_encode($resultado);
 	exit;
 }
 if( empty( $dt_hr_ocorrencia )){
-	$resultado =  array("id" => null, "tipo" => "erro", "msg" => "Data/hora não preenchida!");
+	$resultado =  array("id" => null, "tipo" => "danger", "msg" => "Data/hora não preenchida!");
 	echo json_encode($resultado);
 	exit;
 }

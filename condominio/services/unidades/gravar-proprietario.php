@@ -18,9 +18,9 @@ $res_prop = $MoradorDAO->existeMorador($Morador);
 if(!$res_prop){
 	$MoradorDAO->gravarMorador($Morador);
 	$UnidadeDAO->gravarUnidade($Unidade);
-	$resultado =  array("tipo" => "sucesso", "msg" => "Unidade cadastrada com sucesso.");
+	$resultado =  array("tipo" => "success", "msg" => "Unidade cadastrada com sucesso.");
 }else{
-	$resultado =  array("tipo" => "erro", "msg" => "Unidade já possui proprietário cadastrado. Procure o administrador do sistema.");
+	$resultado =  array("tipo" => "danger", "msg" => "Unidade já possui proprietário cadastrado. Procure o administrador do sistema.");
 }
 
 echo json_encode($resultado);

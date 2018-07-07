@@ -8,7 +8,7 @@ $Veiculo = new Veiculo($_POST);
 $VeiculoDAO = new VeiculoDAO();
 
 $VeiculoDAO->excluirVeiculo($Veiculo);
-$resultado =  array("tipo" => "sucesso", "msg" => "Exclusão feita com sucesso!");
+$resultado =  array("tipo" => "success", "msg" => "Exclusão feita com sucesso!");
 
 echo json_encode($resultado);
 exit;
