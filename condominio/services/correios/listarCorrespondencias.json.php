@@ -23,7 +23,7 @@ if (! empty($params['searchPhrase'])) {
     $where .= " AND ( CONCAT(tic.no_tipo_item_correio,' nr. ',c.ds_item) LIKE '%" . $params['searchPhrase'] . "%' ";
     $where .= " OR p.no_pessoa LIKE '%" . $params['searchPhrase'] . "%' ";
     $where .= " OR c.ds_observacao LIKE '%" . $params['searchPhrase'] . "%' ";
-    $where .= " OR CONCAT('Torre ',u.co_torre,' unidade ',u.nu_numero) LIKE '%" . $params['searchPhrase'] . "%' )";
+    $where .= " OR CONCAT(u.co_torre,u.nu_numero) LIKE '%" . $params['searchPhrase'] . "%' )";
 }
 if (! empty($params['sort'])) {
     switch (key($params['sort'])){
@@ -31,7 +31,7 @@ if (! empty($params['sort'])) {
             $itemOrder = "c.dt_hr_chegada";
             break;
         case "retirada":
-            $itemOrder = "rc.dt_hr_retirada";
+            $itemOrder = "retirada";
             break;
         default:
             $itemOrder = key($params['sort']);        
@@ -41,7 +41,7 @@ if (! empty($params['sort'])) {
 // getting total number records without any search
 $campos = "c.co_item_correio AS 'id',
            CONCAT(tic.no_tipo_item_correio,' nr. ',c.ds_item) AS 'item',
-			CONCAT('Torre ',u.co_torre,' unidade ',u.nu_numero) AS 'unidade',
+			CONCAT(u.co_torre,u.nu_numero) AS 'unidade',
             p.no_pessoa AS 'recebedor',
 			DATE_FORMAT(c.dt_hr_chegada,'%d/%m/%Y %H:%i') AS 'chegada',
 			COALESCE(DATE_FORMAT(rc.dt_hr_retirada,'%d/%m/%Y %H:%i'), '<i>Não retirado</i>') AS 'retirada'";

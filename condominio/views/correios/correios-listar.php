@@ -17,7 +17,7 @@
   <div class="panel-body">
 		<div class="row">
 		  <div class="col-sm-7 col-md-6 col-lg-6">
-				<button class="btn btn-primary" id="btn-novo">Registrar entrada</button>
+				<button class="btn btn-primary" id="btn-novo">Registrar nova entrada</button>
 				<button disabled class="btn btn-warning" id="btn-retirada">Retirada pelo Morador</button>		
 		  </div>
 		</div><!-- Fecha div row -->			
@@ -27,13 +27,13 @@
     <table id="grid" class="table table-condensed table-hover table-striped">
         <thead>
             <tr>
-                <th data-column-id="id"        data-type="numeric" data-identifier="true" data-width="5%">Id</th>
+                <th data-column-id="id"        data-type="numeric" data-identifier="true" data-sortable="false" data-visible="false">Id</th>
                 <th data-column-id="item"      data-type="string" data-width="27%">Item</th>
-                <th data-column-id="unidade"   data-type="string" data-width="13%">Unidade</th>
+                <th data-column-id="unidade"   data-type="string" data-width="12%">Torre/Unidade</th>
                 <th data-column-id="recebedor" data-type="string" data-width="20%">Recebedor</th>
-                <th data-column-id="chegada"   data-type="string" data-order="desc" data-width="13%">Chegada</th>
-                <th data-column-id="retirada"  data-type="string" data-width="13%">Retirada</th>
-                <th data-column-id="commands"  data-formatter="commands" data-sortable="false" data-width="9%"></th>
+                <th data-column-id="chegada"   data-type="string" data-order="desc" data-width="15%">Chegada</th>
+                <th data-column-id="retirada"  data-type="string" data-width="15%">Retirada</th>
+                <th data-column-id="commands"  data-formatter="commands" data-sortable="false" data-width="10%"></th>
             </tr>
         </thead>
     </table>	
@@ -218,7 +218,7 @@ var grid = $("#grid").bootgrid({
     selection: true,
     multiSelect: true,
     rowSelect: true,
-    keepSelection: true,
+    keepSelection: false,
     formatters: {
         "commands": function(column, row)
         {
@@ -255,13 +255,17 @@ var grid = $("#grid").bootgrid({
     }).end().find(".excluir").on("click", function(e) {
     	abreModalExclusao($(this).data("row-id"));
     });
+    cancelarEntrega();
 });
 
 function cancelarEntrega(){
+    rowIds = [];
+    objLinha = { id: 0, item: ''};
 	$('#digitos_cpf').val(null);
 	$('#ds_observacao').val(null);
 	$('#ds_observacao').val("Retirada em lote mediante CPF do morador.");
 	$('#btn-retirar').attr("disabled", true);
+	$('#btn-retirada').attr("disabled", true);
 	$('#modal-confirmar-retirada').modal('hide');
 }
 
@@ -276,5 +280,6 @@ $( "#btn-novo" ).click(function() {
 });
 $( "#btn-cancelar-entrega" ).click(function() {
 	cancelarEntrega();
+	$("#grid").bootgrid("reload");
 });
 </script>

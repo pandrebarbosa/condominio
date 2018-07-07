@@ -4,7 +4,7 @@ require_once (realpath(dirname(dirname(dirname(__FILE__)))) . '/services/lib/ini
 include(realpath(dirname(dirname(dirname(__FILE__)))) . '/entidades/RetiradaCorreio.class.php');
 include(realpath(dirname(dirname(dirname(__FILE__)))) . '/entidades/Pessoa.class.php');
 include(realpath(dirname(dirname(dirname(__FILE__)))) . '/DAO/RetiradaCorreioDAO.class.php');
-include(realpath(dirname(dirname(dirname(__FILE__)))) . '/DAO/PessoaDAO.class.php');
+include(realpath(dirname(dirname(dirname(__FILE__)))) . '/DAO/MoradorDAO.class.php');
 
 $co_funcionario_retirada = $_POST['co_funcionario_retirada'];
 $ds_observacao = $_POST['ds_observacao'];
@@ -30,10 +30,8 @@ if( $cpf == null ){
 
 
 //verifica se existe o morador com o cpf informado
-$Pessoa = new Pessoa();
-$Pessoa->setNuCpf($cpf);
-$PessoaDAO = new PessoaDAO();
-$pessoaRes = $PessoaDAO->listarPessoaJSON($Pessoa);
+$MoradorDAO = new MoradorDAO();
+$pessoaRes = $MoradorDAO->listarMoradorPorCPFJSON($cpf);
 if(!$pessoaRes){
     $resultado =  array("id" => null, "tipo" => "danger", "msg" => "Morador não identificado!<br />Verifique se o morador está cadastrado no sistema e  tente novamente.");
     echo json_encode($resultado);

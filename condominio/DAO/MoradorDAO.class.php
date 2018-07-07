@@ -296,6 +296,35 @@ class MoradorDAO extends Db {
 	        return false;
 	    }
 	    
-	}	
+	}
+	
+	
+	/**
+	 * Lista um morador de uma unidade dado o CPF
+	 *
+	 * @param CPF
+	 * @return Pessoa
+	 */
+	public function listarMoradorPorCPFJSON($cpf) {
+	    
+	    $arrayCampos = array(
+	        "pe.co_pessoa",
+	        "pe.no_pessoa",
+	        "pe.nu_cpf",
+	        "pe.nu_rg"
+	    );
+	    
+	    $criterio = "mo.st_ativo IS TRUE";
+	    $tabelas = "tb_morador AS mo
+					INNER JOIN tb_pessoa AS pe ON pe.co_pessoa=mo.co_pessoa AND pe.nu_cpf='" . $cpf . "'";
+	    $res = $this->connBanco->selecionar( $tabelas, $arrayCampos, $criterio, NULL, NULL, NULL, FALSE );
+	    
+	    if($res){
+	        return $res;
+	    }else{
+	        return false;
+	    }
+	    
+	}
 	
 }
