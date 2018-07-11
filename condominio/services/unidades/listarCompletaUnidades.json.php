@@ -45,7 +45,7 @@ if (! empty($params['sort'])) {
 }
 // getting total number records without any search
 $campos = "u.nu_numero as 'nu_numero',tu.no_tipo_unidade AS 'tipo',u.co_unidade as 'co_unidade',t.no_torre as 'no_torre',
-        CONCAT(t.no_torre,u.nu_numero)  AS 'unidade',
+        CONCAT(COALESCE(t.no_torre,''),COALESCE(u.nu_numero,'')) AS 'unidade',
         COALESCE(p.no_pessoa,'Desocupado') AS 'morador',p.co_pessoa";
 $tabelas = "tb_unidade AS u
         INNER JOIN tb_tipo_unidade AS tu ON tu.co_tipo_unidade=u.co_tipo_unidade
