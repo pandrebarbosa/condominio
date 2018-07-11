@@ -21,7 +21,8 @@ $tabelas = "tb_morador AS mo
 			INNER JOIN tb_unidade AS u ON u.co_unidade=mo.co_unidade
 			INNER JOIN tb_tipo_morador AS tm ON tm.co_tipo_morador=mo.co_tipo_morador
 			INNER JOIN tb_tipo_unidade AS tu ON tu.co_tipo_unidade=u.co_tipo_unidade
-			INNER JOIN tb_torre AS tr ON tr.co_torre=u.co_torre
+			LEFT JOIN tb_torre AS tr ON tr.co_torre=u.co_torre
 			LEFT JOIN tb_profissao AS p ON p.co_profissao=mo.co_profissao";
 $res_cli = $banco->seleciona($tabelas,$campos,"mo.co_pessoa=".$co_pessoa, "", "", "", FALSE);
+
 echo json_encode($res_cli);

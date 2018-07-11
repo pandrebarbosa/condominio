@@ -166,10 +166,10 @@
 		                  	<li class="dropdown-header">Controller</li>
 							<li><a href="?ido=<?php echo base64_encode("controller-listar")?>">Cadastrar</a></li>
 							<li><a href="?ido=<?php echo base64_encode("controller-vincular")?>">Vincular</a></li>
-							<li role="separator" class="divider"></li>
-		                  	<li class="dropdown-header">Grupos de Mensagem</li>
-							<li><a href="?ido=<?php echo base64_encode("grupos-mensagem-manter")?>">Criar Grupo</a></li>
-							<li><a href="?ido=<?php echo base64_encode("grupos-mensagem-listar")?>">Listar Grupos</a></li>
+<!-- 							<li role="separator" class="divider"></li> -->
+<!-- 		                  	<li class="dropdown-header">Grupos de Mensagem</li> -->
+<!--							<li><a href="?ido=<?php echo base64_encode("grupos-mensagem-manter")?>">Criar Grupo</a></li> -->
+<!--							<li><a href="?ido=<?php echo base64_encode("grupos-mensagem-listar")?>">Listar Grupos</a></li> -->
 							<li role="separator" class="divider"></li>
 		                  	<li class="dropdown-header">Tipos de usuários</li>
 							<li><a href="?ido=<?php echo base64_encode("tipos-usuarios-listar")?>">Manter</a></li>

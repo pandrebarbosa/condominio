@@ -111,7 +111,7 @@
 <script>
 var abreModalImpressao = function(id) {
     varWindow = window.open (
-    "http://<?php echo $_SESSION['credencial']['ambiente']=="DEV" ? "localhost/condominiosanraphael" : "www.condominiosanraphael.com.br" ?>/condominio/views/correios/impressao.html?co_item_correio="+id,
+    "http://<?php echo $_SESSION['credencial']['ambiente']=="DEV" ? "localhost/condominio" : "www.condominiosanraphael.com.br" ?>/condominio/views/correios/impressao.html?co_item_correio="+id,
     'Impressão',
     "width=100, height=50, top=100, left=400, scrollbars=no" );
 };

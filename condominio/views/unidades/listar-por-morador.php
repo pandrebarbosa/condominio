@@ -19,6 +19,7 @@
                 <th data-column-id="co_unidade" data-type="string" data-visible="false">unidade</th>
                 <th data-column-id="nu_numero"  data-type="string" data-visible="false">numero</th>
                 <th data-column-id="no_torre"   data-type="string" data-visible="false">torre</th>
+                <th data-column-id="co_pessoa"   data-type="string" data-visible="false">pessoa</th>
                 <th data-column-id="tipo"       data-type="string" data-width="10%">Tipo</th>
                 <th data-column-id="morador"    data-type="string" data-width="27%">Morador</th>
                 <th data-column-id="unidade"    data-type="string" data-width="17%">Unidade</th>
@@ -42,12 +43,17 @@ var grid = $("#grid").bootgrid({
     formatters: {
         "commands": function(column, row)
         {
-            return "<button type=\"button\" class=\"btn btn-primary btn-xs btn-default detalhar\" data-row-coUnidade=\"" + row.co_unidade + "\" data-row-nuNumero=\"" + row.nu_numero + "\" data-row-noTorre=\"" + row.no_torre + "\"><span class=\"glyphicon glyphicon-zoom-in\"></span></button> ";
+            return "<button type=\"button\" class=\"btn btn-primary btn-xs btn-default detalhar\" data-row-coUnidade=\"" + row.co_unidade + "\" data-row-copessoa=\"" + row.co_pessoa + "\" data-row-tipo=\"" + row.tipo + "\" data-row-nuNumero=\"" + row.nu_numero + "\" data-row-noTorre=\"" + row.no_torre + "\"><span class=\"glyphicon glyphicon-zoom-in\"></span></button> ";
         }
     }
 }).on("loaded.rs.jquery.bootgrid", function(){
     grid.find(".detalhar").on("click", function(e) {
-    	document.location.href='default.php?ido=<?php echo base64_encode("abrir-ficha-unidade")?>&co_unidade=' + $(this).data("row-counidade") + '&nu_numero=' + $(this).data("row-nunumero") + '&no_torre=' + $(this).data("row-notorre");
+    	var tipo=$(this).data("row-tipo").split(" ");
+    	var endereco = 'default.php?ido=<?php echo base64_encode("abrir-ficha-unidade")?>&co_unidade=' + $(this).data("row-counidade") + '&nu_numero=' + $(this).data("row-nunumero") + '&no_torre=' + $(this).data("row-notorre");
+        if(tipo[0] == "Garagem"){
+            endereco = 'default.php?ido=<?php echo base64_encode("abrir-ficha-garagem")?>&co_unidade=' + $(this).data("row-counidade") + '&co_pessoa=' + $(this).data("row-copessoa") + '&nu_numero=' + $(this).data("row-nunumero");
+        }
+    	document.location.href=endereco;
     });
 });
 </script>

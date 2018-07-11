@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html>
 <head>
-<title>Impressão de comprovante de correio</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<title>Impressao de comprovante de correio</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -40,7 +42,7 @@
 <body>
 <script>
 var carrega = function(data) {
-var applet='<applet archive="MP4200TH.jar" code=appletcondominio.MP4200TH.class width="100" height="100" >';
+var applet='<applet archive="MP4200TH.jar" code="appletcondominio.MP4200TH.class" >';
 	applet+='<param name=data_hora value="' + data.dt_hr_chegada + '">';
 	applet+='<param name=co_item_correio value="' + data.co_item_correio + '">';
 	applet+='<param name=unidade value="' + data.unidade_impressora + '">';
