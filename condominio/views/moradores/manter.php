@@ -170,13 +170,7 @@ $( "#no_profissao" ).click(function() {
 	$( "#co_profissao" ).val(null);
 });
 
-var edicaoPessoa = function() {
-	if( $("#co_pessoa").val() > 0 && $("#nu_cpf").val() != '' ){
-		$("#nu_cpf").attr("disabled","true");
-	}else{
-		$("#nu_cpf").removeAttr("disabled","true");
-	}
-};edicaoPessoa();
+
 
 var limpaCamposMoradores = function() {
 	$("#co_pessoa").val(null);
@@ -195,7 +189,6 @@ var limpaCamposMoradores = function() {
 	$("#nu_rgTemp").val( null );
 	$("#dt_nascimentoTemp").val( null );
 	limparImagem();
-	edicaoPessoa();
 };
 
 
@@ -378,7 +371,6 @@ var carregaMorador = function(co_pessoa) {
 			$("#st_foto_publica" + data[0].st_foto_publica).attr('checked','checked');
 			gridContatos( data[0].co_pessoa );
 			mostrarCamposContatos();
-			edicaoPessoa();
 			$('#linkAbas a[href="#moradores"]').tab('show');
 		}).fail(function(jqXHR, textStatus, errorThrown) {
 			alert( "Erro: " + textStatus + "\n" + jqXHR.responseText );
@@ -438,7 +430,6 @@ $( "#btn-confirmar-pessoa" ).click(function() {
 	$("#nu_cpf").val( $("#nu_cpfTemp").val() );
 	$("#nu_rg").val( $("#nu_rgTemp").val() );
 	$("#dt_nascimento").val( $("#dt_nascimentoTemp").val() );
-	edicaoPessoa();
 	$("#modal-confirmar-cpf").modal('hide');
 });
 
@@ -481,13 +472,12 @@ var gravaMorador = function() {
 	}).done(function( data ){
 		if( data.tipo=="erro" ){
 			mostrarAlertas(data.tipo,data.msg);
-			edicaoPessoa();
 		}else{
 			mostrarAlertas(data.tipo,data.msg);
 			limpaCamposMoradores();
 			gridMoradores();
 			$('#linkAbas a[href="#ficha"]').tab('show');
-		}		
+		}
 
 	}).fail(function(jqXHR, textStatus, errorThrown) {
 		alert( "Erro: " + textStatus + "\n" + jqXHR.responseText );
