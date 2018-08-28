@@ -6,7 +6,8 @@ $banco = new banco();
 $params = $totalRecords = $data = array();
 
 $orderBy = $limit = "";
-$where = "c.st_ativo IS TRUE";
+$where = "";
+$where = " c.st_ativo IS TRUE AND YEAR(c.dt_hr_chegada) >= YEAR(CURDATE())";
 
 $params = $_REQUEST;
 $limit = $params["rowCount"];
