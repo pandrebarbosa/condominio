@@ -75,6 +75,7 @@ class RetiradaCorreioDAO extends Db {
 	        "co_item_correio",
 	        "co_funcionario_retirada",
 	        "co_pessoa_retirada",
+	        "co_unidade_retirada",
 	        "dt_hr_retirada",
 	        "ds_observacao",
 	        "dt_hr_registro",

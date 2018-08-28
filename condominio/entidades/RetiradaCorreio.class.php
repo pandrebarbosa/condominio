@@ -3,6 +3,7 @@ class RetiradaCorreio {
 	private $co_item_correio;
 	private $co_funcionario_retirada;
 	private $co_pessoa_retirada;
+	private $co_unidade_retirada;
 	private $dt_hr_retirada;
 	private $ds_observacao;
 	private $dt_hr_registro;
@@ -68,5 +69,15 @@ class RetiradaCorreio {
 		$this->dt_hr_registro = $dt_hr_registro;
 		return $this;
 	}
+    public function getCoUnidadeRetirada(){
+        return $this->co_unidade_retirada;
+    }
+    public function setCoUnidadeRetirada($co_unidade_retirada){
+        $this->co_unidade_retirada = $co_unidade_retirada;
+        return $this;
+    }
+
+	
+	
 	
 }

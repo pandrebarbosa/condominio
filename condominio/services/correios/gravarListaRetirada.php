@@ -48,6 +48,7 @@ foreach(json_decode($_POST['listaRetirada']) as $key => $val){
     $RetiradaCorreio->setCoItemCorreio($val->id);
     $RetiradaCorreio->setCoFuncionarioRetirada($co_funcionario_retirada);
     $RetiradaCorreio->setCoPessoaRetirada($pessoaRes[0]['co_pessoa']);
+    $RetiradaCorreio->setCoUnidadeRetirada($pessoaRes[0]['co_unidade']);
     $RetiradaCorreio->setDsObservacao($ds_observacao);
     $RetiradaCorreio->setDtHrRetirada(toolBox::formataDataHora(date("d/m/Y H:i"),"G"));
     $RetiradaCorreio->setDtHrRegistro("CURRENT_TIMESTAMP");

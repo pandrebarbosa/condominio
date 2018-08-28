@@ -153,7 +153,7 @@ var gravarRetirada = function() {
 		    } 
 	}).done(function( data ){
 		mostrarAlertas(data.tipo,data.msg);
-		document.location.href="?ido=correios-listar";		
+		document.location.href="?ido=<?php echo base64_encode("correios-listar")?>";		
 	}).fail(function(jqXHR, textStatus, errorThrown) {
 		alert( "Erro: " + textStatus + "\n" + jqXHR.responseText );
 		loading(false);

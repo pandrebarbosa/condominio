@@ -311,7 +311,8 @@ class MoradorDAO extends Db {
 	        "pe.co_pessoa",
 	        "pe.no_pessoa",
 	        "pe.nu_cpf",
-	        "pe.nu_rg"
+	        "pe.nu_rg",
+	        "mo.co_unidade"
 	    );
 	    
 	    $criterio = "mo.st_ativo IS TRUE";
