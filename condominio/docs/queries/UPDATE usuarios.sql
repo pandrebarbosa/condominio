@@ -1,1 +1,0 @@
-UPDATE sanraphael.tb_usuario SET ds_senha = '3d186804534370c3c817db0563f0e461' WHERE co_pessoa > 0

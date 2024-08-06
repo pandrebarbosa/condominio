@@ -1,1 +1,0 @@
-<iframe src="views/relatorios/relatorio-moradores-pdf.php" frameborder="0" style="height:600px; width: 100%">
