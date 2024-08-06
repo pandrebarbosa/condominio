@@ -42,13 +42,9 @@
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
-<<<<<<< HEAD
             "@php artisan key:generate --ansi",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
-=======
-            "@php artisan key:generate --ansi"
->>>>>>> c17f75803b68b5280742ddcf3c9e17a4e4050fbb
         ]
     },
     "extra": {
